@@ -563,7 +563,7 @@ h2('KinSU \u7684\u9632\u62a4\u63aa\u65bd')+
 p('KinSU \u91c7\u53d6\u4e86\u591a\u5c42\u9632\u62a4\u6765\u9632\u6b62\u547d\u4ee4\u6ce8\u5165\u653b\u51fb\uff1a')+
 h3('1. \u53c2\u6570\u6d88\u6bd2')+
 p('\u6240\u6709\u4ece\u7528\u6237\u7a7a\u95f4\u63a5\u6536\u7684\u53c2\u6570\u90fd\u4f1a\u7ecf\u8fc7\u4e25\u683c\u7684\u8f93\u5165\u9a8c\u8bc1\u548c\u6d88\u6bd2\u5904\u7406\uff1a')+
-pre('// \u53c2\u6570\u6d88\u6bd2\u793a\u4f8b\nstatic int sanitize_command(const char *input) {\n    const char *dangerous = ";|&$`\\n\\"\\'";\n    for (int i = 0; input[i]; i++) {\n        for (int j = 0; dangerous[j]; j++) {\n            if (input[i] == dangerous[j])\n                return -EINVAL;\n        }\n    }\n    return 0;\n}')+
+pre('// \u53c2\u6570\u6d88\u6bd2\u793a\u4f8b\nstatic int sanitize_command(const char *input) {\n    const char *dangerous = ";|&$`\n\\"\\\'";\n    for (int i = 0; input[i]; i++) {\n        for (int j = 0; dangerous[j]; j++) {\n            if (input[i] == dangerous[j])\n                return -EINVAL;\n        }\n    }\n    return 0;\n}')+
 h3('2. \u767d\u540d\u5355\u547d\u4ee4\u673a\u5236')+
 p('KinSU \u4ec5\u5141\u8bb8\u6267\u884c\u9884\u5b9a\u4e49\u7684\u5b89\u5168\u547d\u4ee4\uff0c\u4e0d\u5141\u8bb8\u4efb\u610f\u547d\u4ee4\u6267\u884c\uff1a')+
 pre('// \u767d\u540d\u5355\u547d\u4ee4\u5217\u8868\nstatic const char *allowed_commands[] = {\n    "su", "mount", "umount",\n    "setenforce", "getenforce", NULL\n};\n\nstatic int is_command_allowed(const char *cmd) {\n    for (int i = 0; allowed_commands[i]; i++)\n        if (strcmp(cmd, allowed_commands[i]) == 0) return 1;\n    return 0;\n}')+
@@ -624,7 +624,7 @@ p('WebUI \u53ef\u4ee5\u901a\u8fc7\u4ee5\u4e0b JavaScript \u63a5\u53e3\u4e0e\u6a2
 pre('// \u6267\u884c Shell \u547d\u4ee4\nKinSU.exec(command, (code, stdout, stderr) => {\n    console.log("Exit code:", code);\n    console.log("Output:", stdout);\n});\n\n// \u83b7\u53d6\u6a21\u5757\u914d\u7f6e\nKinSU.getConfig((config) => {\n    console.log("Config:", config);\n});\n\n// \u4fdd\u5b58\u6a21\u5757\u914d\u7f6e\nKinSU.setConfig({ key: "value" }, (success) => {\n    console.log("Saved:", success);\n});')+
 h2('\u5b8c\u6574\u793a\u4f8b')+
 p('\u4ee5\u4e0b\u662f\u4e00\u4e2a\u7b80\u5355\u7684 WebUI \u793a\u4f8b\uff1a')+
-pre('<!-- webroot/index.html -->\n<!DOCTYPE html>\n<html>\n<head>\n    <meta charset="utf-8">\n    <title>\u6211\u7684\u6a21\u5757</title>\n    <style>\n        body { font-family: sans-serif; padding: 20px; }\n        button { padding: 10px 20px; margin: 5px; }\n    </style>\n</head>\n<body>\n    <h1>\u6a21\u5757\u63a7\u5236\u53f0</h1>\n    <button onclick="toggle()">\u5f00\u542f/\u5173\u95ed</button>\n    <div id="status">\u72b6\u6001\uff1a\u672a\u77e5</div>\n    <script>\n        function toggle() {\n            KinSU.exec("toggle_feature", (code, out) => {\n                document.getElementById("status").textContent = out;\n            });\n        }\n    </script>\n</body>\n</html>')+
+pre('<!-- webroot/index.html -->\n<!DOCTYPE html>\n<html>\n<head>\n    <meta charset="utf-8">\n    <title>\u6211\u7684\u6a21\u5757</title>\n    <style>\n        body { font-family: sans-serif; padding: 20px; }\n        button { padding: 10px 20px; margin: 5px; }\n    </style>\n</head>\n<body>\n    <h1>\u6a21\u5757\u63a7\u5236\u53f0</h1>\n    <button onclick="toggle()">\u5f00\u542f/\u5173\u95ed</button>\n    <div id="status">\u72b6\u6001\uff1a\u672a\u77e5</div>\n    <script>\n        function toggle() {\n            KinSU.exec("toggle_feature", (code, out) => {\n                document.getElementById("status").textContent = out;\n            });\n        }\n    <\\/script>\n</body>\n</html>')+
 callout('info','\u2139\ufe0f WebUI \u8fd0\u884c\u5728 KinSU Manager \u7684\u6c99\u7bb1\u73af\u5883\u4e2d\uff0c\u53ea\u80fd\u901a\u8fc7\u63d0\u4f9b\u7684 JavaScript \u63a5\u53e3\u4e0e\u7cfb\u7edf\u4ea4\u4e92\u3002');
 }};
 
@@ -663,7 +663,7 @@ function table(headers,rows){
   return h+'</tbody></table>';
 }
 function slug(s){return s.replace(/[^\w\u4e00-\u9fff]/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');}
-function esc(s){return s.replace(/&/g,'&').replace(/</g,'<').replace(/>/g,'>');}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
 // ====== App State ======
 var currentPage='install';
