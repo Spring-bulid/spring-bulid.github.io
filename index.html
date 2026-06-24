@@ -722,8 +722,8 @@ var currentView='home';
 // ====== Initialize Landing Page ======
 function initLanding(){
   document.getElementById('heroTitle').textContent=T.heroTitle;
-  document.getElementById('heroSubtitle').textContent=T.heroSubtitle;
-  document.getElementById('heroDesc').textContent=T.heroDesc;
+  document.getElementById('heroSubtitle').innerHTML=T.heroSubtitle;
+  document.getElementById('heroDesc').innerHTML=T.heroDesc;
   document.getElementById('heroButtons').innerHTML=
     '<a href="https://github.com/Spring-bulid/KinSU/releases/latest" target="_blank" class="btn-primary">'+T.btnAdventure+'</a>'+
     '<a href="#" onclick="switchToDocs();return false;" class="btn-secondary">'+T.btnGuide+'</a>';
