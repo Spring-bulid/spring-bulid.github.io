@@ -1,413 +1,889 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KinSU - 寮備笘鐣?Root 涔嬫梾</title>
+<title>KinSU - 穿越内核的异世界 Root 冒险</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+:root{--primary:#3370ff;--primary-light:#e8f0ff;--primary-dark:#245bdb;--bg:#fff;--bg-gray:#f5f6f7;--bg-dark:#1a1a2e;--text-primary:#1f2329;--text-secondary:#3b3f46;--text-tertiary:#8f959e;--border:#e4e7ed;--border-light:#eff0f1;--code-bg:#f2f4f7;--code-dark-bg:#1e1e2e;--code-dark-text:#cdd6f4;--sidebar-w:260px;--toc-w:200px;--navbar-h:56px;--shadow-sm:0 1px 2px rgba(0,0,0,.06);--shadow-md:0 4px 12px rgba(0,0,0,.08);--shadow-lg:0 8px 24px rgba(0,0,0,.12);--radius-sm:6px;--radius-md:8px;--radius-lg:12px;--tr:.25s cubic-bezier(.4,0,.2,1)}
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--primary:#7c5cfc;--primary-light:#a78bfa;--accent:#f472b6;--bg-dark:#0f0a1a;--bg-card:rgba(20,14,40,0.85);--text:#e8e0f0;--text-dim:#9b8cb8;--glow:0 0 20px rgba(124,92,252,0.3)}
-body{font-family:'Noto Sans SC',sans-serif;background:var(--bg-dark);color:var(--text);line-height:1.8;overflow-x:hidden}
-.bg-anime{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-2;background-size:cover;background-position:center;background-repeat:no-repeat;transition:opacity 1s;opacity:0.6}
-.bg-overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;background:linear-gradient(180deg,rgba(15,10,26,0.7) 0%,rgba(15,10,26,0.85) 50%,rgba(15,10,26,0.95) 100%)}
-nav{position:fixed;top:0;width:100%;z-index:100;padding:16px 30px;display:flex;justify-content:space-between;align-items:center;background:rgba(15,10,26,0.8);backdrop-filter:blur(12px);border-bottom:1px solid rgba(124,92,252,0.15)}
-nav .logo{font-size:1.4em;font-weight:700;background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-nav .nav-links a{color:var(--text-dim);text-decoration:none;margin-left:24px;font-size:0.95em;transition:color .3s}
-nav .nav-links a:hover{color:var(--primary-light)}
-.hero{text-align:center;padding:140px 20px 80px;position:relative}
-.hero h1{font-size:3.5em;margin-bottom:12px;background:linear-gradient(135deg,var(--primary),var(--accent),#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none;animation:float 3s ease-in-out infinite}
-.hero .subtitle{font-size:1.3em;color:var(--text-dim);max-width:650px;margin:0 auto 20px}
-.hero .tagline{font-size:1em;color:var(--accent);margin-bottom:36px;font-style:italic}
-.btn-primary{display:inline-block;padding:16px 40px;background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;text-decoration:none;border-radius:50px;font-size:1.1em;font-weight:500;transition:transform .2s,box-shadow .2s;box-shadow:var(--glow)}
-.btn-primary:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 12px 35px rgba(124,92,252,0.4)}
-.btn-secondary{display:inline-block;padding:14px 32px;border:2px solid var(--primary);color:var(--primary-light);text-decoration:none;border-radius:50px;font-size:1em;transition:all .3s;margin-left:16px}
-.btn-secondary:hover{background:var(--primary);color:#fff}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-.section{max-width:1100px;margin:80px auto;padding:0 20px}
-.section-title{text-align:center;font-size:2.2em;margin-bottom:16px;background:linear-gradient(135deg,var(--primary-light),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.section-desc{text-align:center;color:var(--text-dim);max-width:700px;margin:0 auto 50px;font-size:1.05em}
-.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
-.feature-card{background:var(--bg-card);border-radius:20px;padding:32px;border:1px solid rgba(124,92,252,0.12);backdrop-filter:blur(8px);transition:all .3s;position:relative;overflow:hidden}
-.feature-card:hover{border-color:var(--primary);transform:translateY(-4px);box-shadow:var(--glow)}
-.feature-card .icon{font-size:2.4em;margin-bottom:14px;display:block}
-.feature-card h3{color:var(--primary-light);font-size:1.2em;margin-bottom:10px}
-.feature-card p{color:var(--text-dim);font-size:0.95em}
-.doc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px}
-.doc-card{background:var(--bg-card);border-radius:16px;padding:28px;border:1px solid rgba(124,92,252,0.1);backdrop-filter:blur(8px);transition:all .3s}
-.doc-card:hover{border-color:var(--primary);box-shadow:var(--glow)}
-.doc-card h3{color:var(--primary-light);font-size:1.15em;margin-bottom:12px;display:flex;align-items:center;gap:8px}
-.doc-card p{color:var(--text-dim);font-size:0.92em;margin-bottom:12px}
-.doc-card code{background:rgba(124,92,252,0.12);color:var(--primary-light);padding:2px 8px;border-radius:6px;font-size:0.88em}
-.doc-card ul{list-style:none;padding:0}
-.doc-card ul li{color:var(--text-dim);font-size:0.9em;padding:4px 0;padding-left:20px;position:relative}
-.doc-card ul li::before{content:'';position:absolute;left:0;top:12px;width:8px;height:8px;border-radius:50%;background:var(--primary)}
-.step-list{max-width:800px;margin:0 auto;position:relative;padding-left:40px}
-.step-list::before{content:'';position:absolute;left:14px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--primary),var(--accent))}
-.step{position:relative;margin-bottom:36px}
-.step .step-num{position:absolute;left:-40px;width:30px;height:30px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.85em;font-weight:700}
-.step h3{color:var(--primary-light);font-size:1.1em;margin-bottom:6px}
-.step p{color:var(--text-dim);font-size:0.95em}
-.step code{background:rgba(124,92,252,0.12);color:var(--primary-light);padding:2px 8px;border-radius:6px;font-size:0.88em}
-.compare-table{width:100%;border-collapse:separate;border-spacing:0;border-radius:16px;overflow:hidden;background:var(--bg-card);border:1px solid rgba(124,92,252,0.1)}
-.compare-table th{background:rgba(124,92,252,0.15);color:var(--primary-light);padding:14px 20px;text-align:left;font-weight:500}
-.compare-table td{padding:12px 20px;border-top:1px solid rgba(124,92,252,0.08);color:var(--text-dim);font-size:0.92em}
-.compare-table tr:hover td{background:rgba(124,92,252,0.05)}
-.compare-table .yes{color:#4ade80}
-.compare-table .no{color:#f87171}
-.contributors{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:900px;margin:0 auto 40px;padding:0 20px}
-.contributors a{display:block;transition:transform .2s}
-.contributors a:hover{transform:scale(1.25)}
-.contributors img{width:40px;height:40px;border-radius:50%;border:2px solid rgba(124,92,252,0.3);transition:border-color .3s}
-.contributors a:hover img{border-color:var(--primary-light)}
-footer{text-align:center;padding:50px 20px 40px;border-top:1px solid rgba(124,92,252,0.1)}
-footer .links{margin-bottom:20px}
-footer .links a{color:var(--text-dim);text-decoration:none;margin:0 18px;font-size:1em;transition:color .3s}
-footer .links a:hover{color:var(--primary-light)}
-footer .copy{color:rgba(155,140,184,0.5);font-size:0.85em}
-.lang-switch{position:fixed;bottom:20px;right:20px;z-index:100;background:var(--bg-card);border:1px solid rgba(124,92,252,0.2);border-radius:12px;padding:8px 4px;backdrop-filter:blur(8px)}
-.lang-switch a{display:block;padding:6px 12px;color:var(--text-dim);text-decoration:none;font-size:0.85em;border-radius:8px;transition:all .2s}
-.lang-switch a:hover,.lang-switch a.active{color:var(--primary-light);background:rgba(124,92,252,0.1)}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans SC','Inter',system-ui,-apple-system,sans-serif;color:var(--text-primary);background:var(--bg);line-height:1.6;overflow-x:hidden}
+a{text-decoration:none;color:var(--primary)}
+a:hover{color:var(--primary-dark)}
+button{cursor:pointer;border:none;font-family:inherit}
+
+.navbar{position:fixed;top:0;left:0;right:0;height:var(--navbar-h);background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border-light);z-index:1000;display:flex;align-items:center;padding:0 24px;transition:background var(--tr)}
+.navbar.dark{background:rgba(26,26,46,.92);border-bottom-color:rgba(255,255,255,.08)}
+.nav-logo{font-size:20px;font-weight:700;color:var(--primary);display:flex;align-items:center;gap:8px;cursor:pointer}
+.nav-logo svg{width:28px;height:28px}
+.nav-tabs{display:flex;gap:4px;margin-left:32px}
+.nav-tab{padding:6px 16px;border-radius:var(--radius-sm);font-size:14px;font-weight:500;color:var(--text-secondary);background:0 0;transition:all var(--tr)}
+.nav-tab:hover{background:var(--bg-gray);color:var(--text-primary)}
+.nav-tab.active{background:var(--primary-light);color:var(--primary)}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.nav-github{width:36px;height:36px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;background:0 0;transition:background var(--tr)}
+.nav-github:hover{background:var(--bg-gray)}
+.nav-github svg{width:22px;height:22px;fill:var(--text-secondary)}
+
+#landing{display:block;padding-top:var(--navbar-h)}
+.hero{position:relative;min-height:92vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0;background:url('https://acg.yaohud.cn/dm/adaptive.php') center/cover no-repeat}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(26,26,46,.85),rgba(51,112,255,.4))}
+.hero-content{position:relative;z-index:1;text-align:center;padding:40px 24px;max-width:720px}
+.hero-title{font-size:clamp(48px,8vw,80px);font-weight:700;color:#fff;letter-spacing:-1px;margin-bottom:12px;text-shadow:0 2px 20px rgba(0,0,0,.3)}
+.hero-subtitle{font-size:clamp(18px,3vw,24px);color:rgba(255,255,255,.9);font-weight:400;margin-bottom:8px}
+.hero-desc{font-size:16px;color:rgba(255,255,255,.7);margin-bottom:32px}
+.hero-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn-primary{padding:12px 32px;border-radius:var(--radius-md);background:var(--primary);color:#fff;font-size:15px;font-weight:600;transition:all var(--tr);box-shadow:0 4px 16px rgba(51,112,255,.4)}
+.btn-primary:hover{background:var(--primary-dark);transform:translateY(-1px);box-shadow:0 6px 20px rgba(51,112,255,.5);color:#fff}
+.btn-secondary{padding:12px 32px;border-radius:var(--radius-md);background:rgba(255,255,255,.15);color:#fff;font-size:15px;font-weight:600;border:1px solid rgba(255,255,255,.3);transition:all var(--tr);backdrop-filter:blur(4px)}
+.btn-secondary:hover{background:rgba(255,255,255,.25);color:#fff}
+
+.features{padding:80px 24px;max-width:1200px;margin:0 auto}
+.section-title{font-size:32px;font-weight:700;text-align:center;margin-bottom:12px;color:var(--text-primary)}
+.section-desc{font-size:16px;color:var(--text-tertiary);text-align:center;margin-bottom:48px}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:24px}
+.feature-card{padding:28px;border-radius:var(--radius-lg);background:var(--bg);border:1px solid var(--border-light);transition:all var(--tr)}
+.feature-card:hover{border-color:var(--primary);box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.feature-icon{width:44px;height:44px;border-radius:var(--radius-md);background:var(--primary-light);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px}
+.feature-name{font-size:17px;font-weight:600;color:var(--text-primary);margin-bottom:8px}
+.feature-desc{font-size:14px;color:var(--text-secondary);line-height:1.7}
+
+.getting-started{padding:80px 24px;background:var(--bg-gray)}
+.getting-started-inner{max-width:960px;margin:0 auto}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:32px;margin-top:48px}
+.step{text-align:center}
+.step-num{width:48px;height:48px;border-radius:50%;background:var(--primary);color:#fff;font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.step-title{font-size:16px;font-weight:600;margin-bottom:8px}
+.step-desc{font-size:14px;color:var(--text-secondary)}
+
+.comparison{padding:80px 24px;max-width:960px;margin:0 auto}
+.comparison-table{width:100%;border-collapse:collapse;margin-top:48px;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--border)}
+.comparison-table th{background:var(--bg-gray);padding:14px 20px;font-size:14px;font-weight:600;text-align:left;border-bottom:2px solid var(--border)}
+.comparison-table td{padding:12px 20px;font-size:14px;border-bottom:1px solid var(--border-light)}
+.comparison-table tr:last-child td{border-bottom:none}
+.comparison-table tr:hover td{background:var(--primary-light)}
+.check{color:#52c41a;font-weight:700}
+.cross{color:#ff4d4f;font-weight:700}
+
+.contributors{padding:80px 24px;background:var(--bg-gray)}
+.contributors-inner{max-width:960px;margin:0 auto}
+.avatar-grid{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:48px}
+.avatar{width:48px;height:48px;border-radius:50%;border:2px solid var(--bg);box-shadow:var(--shadow-sm);transition:transform var(--tr)}
+.avatar:hover{transform:scale(1.2);z-index:1}
+
+.footer{padding:32px 24px;text-align:center;border-top:1px solid var(--border-light);color:var(--text-tertiary);font-size:14px}
+
+#docs{display:none;padding-top:var(--navbar-h);height:100vh}
+.docs-layout{display:flex;height:calc(100vh - var(--navbar-h))}
+
+.docs-sidebar{width:var(--sidebar-w);min-width:var(--sidebar-w);background:var(--bg-gray);border-right:1px solid var(--border-light);overflow-y:auto;padding:16px 0;transition:transform var(--tr)}
+.docs-sidebar::-webkit-scrollbar{width:4px}
+.docs-sidebar::-webkit-scrollbar-thumb{background:#d0d3d8;border-radius:2px}
+.sidebar-header{padding:12px 20px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border-light);margin-bottom:8px}
+.sidebar-logo{width:28px;height:28px;border-radius:var(--radius-sm);background:var(--primary);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:700}
+.sidebar-title{font-size:15px;font-weight:600;color:var(--text-primary)}
+
+.sidebar-section{margin-bottom:4px}
+.sidebar-section-header{display:flex;align-items:center;gap:8px;padding:8px 20px;cursor:pointer;font-size:14px;font-weight:500;color:var(--text-primary);transition:background var(--tr);user-select:none}
+.sidebar-section-header:hover{background:rgba(0,0,0,.04)}
+.sidebar-arrow{font-size:10px;transition:transform var(--tr);color:var(--text-tertiary);margin-left:auto}
+.sidebar-section.expanded .sidebar-arrow{transform:rotate(90deg)}
+.sidebar-items{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.sidebar-section.expanded .sidebar-items{max-height:500px}
+.sidebar-item{display:block;padding:6px 20px 6px 48px;font-size:13px;color:var(--text-secondary);cursor:pointer;transition:all var(--tr);position:relative}
+.sidebar-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--primary);opacity:0;transition:opacity var(--tr)}
+.sidebar-item:hover{background:rgba(51,112,255,.06);color:var(--primary)}
+.sidebar-item.active{background:var(--primary-light);color:var(--primary);font-weight:500}
+.sidebar-item.active::before{opacity:1}
+
+.docs-main{flex:1;overflow-y:auto;position:relative;background:var(--bg)}
+.docs-main::-webkit-scrollbar{width:6px}
+.docs-main::-webkit-scrollbar-thumb{background:#d0d3d8;border-radius:3px}
+.docs-content-wrapper{max-width:800px;margin:0 auto;padding:32px 40px 80px;position:relative}
+
+.breadcrumb{font-size:13px;color:var(--text-tertiary);margin-bottom:24px;display:flex;align-items:center;gap:6px}
+.breadcrumb-sep{margin:0 2px}
+
+.doc-title{font-size:28px;font-weight:700;color:var(--text-primary);margin-bottom:8px;padding-bottom:16px;border-bottom:1px solid var(--border-light)}
+.doc-meta{font-size:13px;color:var(--text-tertiary);margin-bottom:32px;display:flex;gap:16px}
+.doc-body h1{font-size:26px;font-weight:600;color:#1f2329;margin-top:32px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border-light)}
+.doc-body h2{font-size:22px;font-weight:600;color:#1f2329;margin-top:28px;margin-bottom:10px}
+.doc-body h3{font-size:18px;font-weight:600;color:#1f2329;margin-top:24px;margin-bottom:8px}
+.doc-body p{font-size:15px;line-height:1.74;color:#3b3f46;margin-bottom:12px}
+.doc-body ul,.doc-body ol{margin:8px 0 12px 24px;font-size:15px;line-height:1.74;color:#3b3f46}
+.doc-body li{margin-bottom:4px}
+.doc-body code{background:#f2f4f7;padding:2px 6px;border-radius:4px;font-size:14px;font-family:'Fira Code',Consolas,monospace;color:#d63384}
+.doc-body pre{background:#1e1e2e;color:#cdd6f4;border-radius:8px;padding:16px;margin:12px 0 16px;overflow-x:auto;font-size:14px;line-height:1.6;font-family:'Fira Code',Consolas,monospace}
+.doc-body pre code{background:none;padding:0;color:inherit;font-size:inherit}
+.doc-body blockquote{border-left:3px solid var(--primary);background:#f2f4f7;padding:12px 16px;margin:12px 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--text-secondary);font-size:14px}
+.doc-body table{width:100%;border-collapse:collapse;margin:12px 0 16px;font-size:14px}
+.doc-body th{background:var(--bg-gray);padding:10px 14px;text-align:left;font-weight:600;border:1px solid var(--border)}
+.doc-body td{padding:10px 14px;border:1px solid var(--border)}
+.doc-body tr:nth-child(even) td{background:#fafbfc}
+
+.callout{padding:12px 16px;border-radius:var(--radius-md);margin:12px 0 16px;font-size:14px;line-height:1.6;display:flex;gap:10px;align-items:flex-start}
+.callout-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.callout-info{background:#e8f0ff;border:1px solid #b8d0ff;color:#1a56db}
+.callout-warning{background:#fff7e6;border:1px solid #ffe0a0;color:#ad6800}
+.callout-tip{background:#e6f9e6;border:1px solid #a8e6a8;color:#1a7a1a}
+
+.docs-toc{width:var(--toc-w);min-width:var(--toc-w);padding:32px 16px;overflow-y:auto;border-left:1px solid var(--border-light)}
+.docs-toc::-webkit-scrollbar{width:3px}
+.docs-toc::-webkit-scrollbar-thumb{background:#e0e0e0;border-radius:2px}
+.toc-title{font-size:12px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px;padding-left:12px}
+.toc-item{display:block;padding:4px 12px;font-size:13px;color:var(--text-tertiary);cursor:pointer;border-left:2px solid transparent;transition:all var(--tr);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.toc-item:hover{color:var(--primary)}
+.toc-item.active{color:var(--primary);border-left-color:var(--primary);font-weight:500}
+.toc-item.h3{padding-left:24px;font-size:12px}
+
+.mobile-menu-btn{display:none;width:36px;height:36px;border-radius:var(--radius-sm);background:0 0;align-items:center;justify-content:center;margin-right:8px}
+.mobile-menu-btn svg{width:20px;height:20px;fill:var(--text-secondary)}
+
+@media(max-width:1024px){.docs-toc{display:none}}
+@media(max-width:768px){
+  .mobile-menu-btn{display:flex}
+  .docs-sidebar{position:fixed;top:var(--navbar-h);left:0;bottom:0;z-index:999;transform:translateX(-100%)}
+  .docs-sidebar.open{transform:translateX(0)}
+  .sidebar-overlay{display:none;position:fixed;inset:0;top:var(--navbar-h);background:rgba(0,0,0,.3);z-index:998}
+  .sidebar-overlay.show{display:block}
+  .features-grid{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr}
+  .hero-title{font-size:40px}
+  .docs-content-wrapper{padding:24px 20px 60px}
+  .comparison-table{font-size:12px}
+  .comparison-table th,.comparison-table td{padding:8px 10px}
+}
+@media(max-width:480px){.steps{grid-template-columns:1fr}.hero-buttons{flex-direction:column;align-items:center}}
+
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.animate-in{animation:fadeInUp .6s ease forwards}
+.animate-delay-1{animation-delay:.1s;opacity:0}
+.animate-delay-2{animation-delay:.2s;opacity:0}
+.animate-delay-3{animation-delay:.3s;opacity:0}
 </style>
 </head>
 <body>
 
-<div class="bg-anime" id="bgAnime"></div>
-<div class="bg-overlay"></div>
-
-<nav>
-  <div class="logo">KinSU</div>
-  <div class="nav-links">
-    <a href="#features">鐗规€?/a>
-    <a href="#docs">鏂囨。</a>
-    <a href="#guide">鎸囧崡</a>
-    <a href="#compare">瀵规瘮</a>
-    <a href="#contributors">璐＄尞鑰?/a>
-    <a href="https://github.com/Spring-bulid/KinSU/releases/latest" class="btn-primary" style="padding:8px 24px;font-size:0.9em">涓嬭浇</a>
+<nav class="navbar" id="navbar">
+  <button class="mobile-menu-btn" id="mobileMenuBtn">
+    <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+  </button>
+  <div class="nav-logo" id="navLogo">
+    <svg viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#3370ff"/><text x="14" y="19" text-anchor="middle" fill="white" font-size="14" font-weight="700" font-family="Inter,sans-serif">K</text></svg>
+    <span>KinSU</span>
+  </div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" id="tabHome" data-tab="home"></button>
+    <button class="nav-tab" id="tabDocs" data-tab="docs"></button>
+  </div>
+  <div class="nav-right">
+    <a href="https://github.com/Spring-bulid/KinSU" target="_blank" class="nav-github" title="GitHub">
+      <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+    </a>
   </div>
 </nav>
 
-<div class="hero">
-  <h1>KinSU</h1>
-  <p class="subtitle">绌胯秺鍐呮牳鐨勫紓涓栫晫 Root 鍐掗櫓璁?/p>
-  <p class="tagline">鈥斺€?浠?LKM 涓哄墤锛屾柀鏂潈闄愮殑鏋烽攣 鈥斺€?/p>
-  <a href="https://github.com/Spring-bulid/KinSU/releases/latest" class="btn-primary">寮€鍚啋闄?/a>
-  <a href="#docs" class="btn-secondary">闃呰鏀荤暐</a>
+<div id="landing">
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <h1 class="hero-title animate-in" id="heroTitle"></h1>
+      <p class="hero-subtitle animate-in animate-delay-1" id="heroSubtitle"></p>
+      <p class="hero-desc animate-in animate-delay-2" id="heroDesc"></p>
+      <div class="hero-buttons animate-in animate-delay-3" id="heroButtons"></div>
+    </div>
+  </section>
+  <section class="features" id="featuresSection">
+    <h2 class="section-title" id="featuresTitle"></h2>
+    <p class="section-desc" id="featuresDesc"></p>
+    <div class="features-grid" id="featuresGrid"></div>
+  </section>
+  <section class="getting-started" id="gettingStartedSection">
+    <div class="getting-started-inner">
+      <h2 class="section-title" id="gsTitle"></h2>
+      <p class="section-desc" id="gsDesc"></p>
+      <div class="steps" id="stepsContainer"></div>
+    </div>
+  </section>
+  <section class="comparison" id="comparisonSection">
+    <h2 class="section-title" id="compTitle"></h2>
+    <p class="section-desc" id="compDesc"></p>
+    <div id="comparisonTable"></div>
+  </section>
+  <section class="contributors" id="contributorsSection">
+    <div class="contributors-inner">
+      <h2 class="section-title" id="contribTitle"></h2>
+      <p class="section-desc" id="contribDesc"></p>
+      <div class="avatar-grid" id="avatarGrid"></div>
+    </div>
+  </section>
+  <footer class="footer" id="footer"></footer>
 </div>
 
-<div class="section" id="features">
-  <h2 class="section-title">鍐掗櫓鑰呮妧鑳芥爲</h2>
-  <p class="section-desc">KinSU 璧嬩簣浣犵殑姣忎竴椤硅兘鍔涳紝閮芥槸閫氬線鏇撮珮闃跺啋闄╄€呯殑閽ュ寵</p>
-  <div class="features">
-    <div class="feature-card">
-      <span class="icon">&#x2694;</span>
-      <h3>LKM 鍩哄噯妯″紡</h3>
-      <p>浠ュ彲鍔犺浇鍐呮牳妯″潡涓哄啋闄╃殑鍩虹煶锛屾棤闇€閲嶇紪璇戝唴鏍稿嵆鍙幏寰?Root 鍔涢噺锛岀伒娲诲椋庯紝杩呮嵎濡傜數</p>
-    </div>
-    <div class="feature-card">
-      <span class="icon">&#x1F3F0;</span>
-      <h3>GKI 寮備笘鐣岄€傞厤</h3>
-      <p>瀹岀編閫傞厤 Android GKI 璁惧鐨勫唴鏍哥骇 Root锛屽湪 init_boot 鐨勫紓涓栫晫涓晠閫氭棤闃?/p>
-    </div>
-    <div class="feature-card">
-      <span class="icon">&#x1F9E9;</span>
-      <h3>妯″潡榄旀硶涔?/h3>
-      <p>寮哄ぇ鐨勬ā鍧楃鐞嗙郴缁燂紝鏀寔 WebUI 鍙鍖栨搷浣滐紝姣忎竴鏈瓟娉曚功閮借兘鎵╁睍浣犵殑鑳藉姏杈圭晫</p>
-    </div>
-    <div class="feature-card">
-      <span class="icon">&#x1F6E1;</span>
-      <h3>瓒呯骇鐢ㄦ埛鏉冮檺</h3>
-      <p>绮剧粏鐨勫簲鐢ㄩ厤缃枃浠剁郴缁燂紝涓烘瘡涓€浣嶅啋闄╄€呴噺韬畾鍒?Root 鏉冮檺锛岃缁欑殑缁欙紝涓嶈缁欑殑涓€寰嬪皝鍗?/p>
-    </div>
-    <div class="feature-card">
-      <span class="icon">&#x1F3A8;</span>
-      <h3>涓婚骞诲寲鏈?/h3>
-      <p>鍔ㄦ€佸彇鑹蹭富棰樺紩鎿庯紝鏀寔 iPhone 椋庢牸瀛椾綋骞诲寲锛岃浣犵殑绠＄悊鍣ㄧ嫭涓€鏃犱簩锛岄鍊煎嵆姝ｄ箟</p>
-    </div>
-    <div class="feature-card">
-      <span class="icon">&#x1F30D;</span>
-      <h3>澶氳瑷€缁撶晫</h3>
-      <p>璺ㄨ秺璇█涔嬪锛屾敮鎸佷腑鏂囥€佽嫳璇€佷縿璇€佹棩璇瓑澶氱璇█锛屽啋闄╂棤鍥界晫</p>
-    </div>
+<div id="docs">
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="docs-layout">
+    <aside class="docs-sidebar" id="docsSidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">K</div>
+        <div class="sidebar-title" id="sidebarTitleText"></div>
+      </div>
+      <div id="sidebarTree"></div>
+    </aside>
+    <main class="docs-main" id="docsMain">
+      <div class="docs-content-wrapper">
+        <div class="breadcrumb" id="breadcrumb"></div>
+        <h1 class="doc-title" id="docTitle"></h1>
+        <div class="doc-meta" id="docMeta"></div>
+        <div class="doc-body" id="docBody"></div>
+      </div>
+    </main>
+    <aside class="docs-toc" id="docsToc">
+      <div class="toc-title" id="tocTitle"></div>
+      <div id="tocItems"></div>
+    </aside>
   </div>
 </div>
-
-<div class="section" id="docs">
-  <h2 class="section-title">鍐掗櫓鑰呮敾鐣ヤ功</h2>
-  <p class="section-desc">鍦ㄨ繖閲岋紝浣犲皢鎵惧埌鍏充簬 KinSU 涓€鍒囧姏閲忕殑璇︾粏瑙ｈ</p>
-  <div class="doc-grid">
-    <div class="doc-card">
-      <h3>&#x1F527; LKM 妯″紡璇﹁В</h3>
-      <p>LKM锛圠oadable Kernel Module锛夋槸 KinSU 鐨勬牳蹇冨啋闄╂ā寮忋€傚畠浠ュ彲鍔犺浇鍐呮牳妯″潡鐨勬柟寮忔敞鍏ョ郴缁燂紝鏃犻渶閲嶆柊缂栬瘧鍐呮牳鍗冲彲鑾峰緱 Root 鏉冮檺銆?/p>
-      <ul>
-        <li>鏃犻渶淇敼鍐呮牳婧愮爜锛屽埛鍏ュ嵆鐢?/li>
-        <li>鏀寔鍔ㄦ€佸姞杞戒笌鍗歌浇锛岀伒娲诲垏鎹?/li>
-        <li>鍏煎闈?GKI 璁惧锛屽啋闄╄寖鍥存洿骞?/li>
-        <li>涓?GKI 妯″紡鑷姩鍒囨崲锛屾棤缂濊鎺?/li>
-      </ul>
-    </div>
-    <div class="doc-card">
-      <h3>&#x1F30D; GKI 璁惧閫傞厤</h3>
-      <p>瀵逛簬 GKI锛圙eneric Kernel Image锛夎澶囷紝KinSU 閫氳繃 <code>init_boot</code> 鍒嗗尯妫€娴嬭嚜鍔ㄨ瘑鍒紝骞舵彁渚涘畬鏁寸殑鍐呮牳绾?Root 鏀寔銆?/p>
-      <ul>
-        <li>鑷姩妫€娴?<code>/dev/block/by-name/init_boot</code> 鍒嗗尯</li>
-        <li>鍒峰叆绗笁鏂瑰唴鏍稿悗浠嶅彲姝ｇ‘璇嗗埆 GKI 璁惧</li>
-        <li>OTA 鏇存柊鍚庤嚜鍔ㄥ垏鎹㈡椿璺冩Ы浣嶏紝Root 涓嶄涪澶?/li>
-        <li>鏀寔 KPM 鍜?SuSFS 楂樼骇鍔熻兘</li>
-      </ul>
-    </div>
-    <div class="doc-card">
-      <h3>&#x1F9E9; 妯″潡绯荤粺</h3>
-      <p>妯″潡鏄?KinSU 鍐掗櫓鑰呯殑榄旀硶閬撳叿銆傛瘡涓ā鍧楅兘鑳芥墿灞曠郴缁熷姛鑳斤紝浠庣郴缁熺編鍖栧埌鎬ц兘浼樺寲锛屾棤鎵€涓嶈兘銆?/p>
-      <ul>
-        <li>鏀寔 WebUI 鍙鍖栭厤缃晫闈?/li>
-        <li>妯″潡浠撳簱涓€閿畨瑁咃紝鑷姩鏇存柊妫€娴?/li>
-        <li>瀹夊叏娌欑闅旂锛屾ā鍧椾簰涓嶅共鎵?/li>
-        <li>鏀寔妯″潡鍗歌浇涓庣鐢紝闅忔椂鍒囨崲</li>
-      </ul>
-    </div>
-    <div class="doc-card">
-      <h3>&#x1F6E1; 瓒呯骇鐢ㄦ埛绠＄悊</h3>
-      <p>绮剧粏鐨勬潈闄愭帶鍒剁郴缁燂紝涓烘瘡涓簲鐢ㄧ嫭绔嬮厤缃?Root 鏉冮檺銆傛敮鎸佹ā鏉跨郴缁燂紝涓€閿簲鐢ㄥ父鐢ㄦ潈闄愰厤缃€?/p>
-      <ul>
-        <li>搴旂敤绾?Root 鏉冮檺寮€鍏?/li>
-        <li>鑷畾涔?SELinux 涓婁笅鏂囦笌鑳藉姏闆?/li>
-        <li>妯℃澘绯荤粺锛氫繚瀛樸€佸垎浜€佸鐢ㄦ潈闄愰厤缃?/li>
-        <li>鎿嶄綔鏃ュ織璁板綍锛屼竴鍒囧敖鍦ㄦ帉鎻?/li>
-      </ul>
-    </div>
-    <div class="doc-card">
-      <h3>&#x1F575; SuSFS 闅愯韩鏈?/h3>
-      <p>SuSFS锛圫uspend FS锛夋槸 KinSU 鐨勯殣韬粨鐣岋紝鍙互闅愯棌鍐呮牳琛ヤ竵鍜岀敤鎴风┖闂存ā鍧楃殑瀛樺湪锛岃 Root 鐘舵€侀亖鍏ユ棤褰€?/p>
-      <ul>
-        <li>闅愯棌鍐呮牳妯″潡鍔犺浇鐘舵€?/li>
-        <li>闅愯棌鐢ㄦ埛绌洪棿妯″潡鏂囦欢</li>
-        <li>瀵规姉妫€娴嬪伐鍏风殑鎵弿</li>
-        <li>浠?GKI 璁惧鍙敤锛堥渶鍐呮牳鏀寔锛?/li>
-      </ul>
-    </div>
-    <div class="doc-card">
-      <h3>&#x2699; KPM 鍐呮牳琛ヤ竵</h3>
-      <p>KPM锛圞ernel Patch Module锛夋槸 KinSU 鐨勯珮绾у唴鏍歌ˉ涓佺郴缁燂紝鍙互鍦ㄨ繍琛屾椂鍔ㄦ€佷慨琛ュ唴鏍歌涓猴紝瀹炵幇鏇存繁灞傜殑鑳藉姏鎵╁睍銆?/p>
-      <ul>
-        <li>杩愯鏃跺唴鏍歌ˉ涓佹敞鍏?/li>
-        <li>鏀寔鑷畾涔夎ˉ涓佹ā鍧?/li>
-        <li>涓?LKM 妯″紡鍗忓悓宸ヤ綔</li>
-        <li>浠?GKI 璁惧鍙敤锛堥渶鍐呮牳鏀寔锛?/li>
-      </ul>
-    </div>
-    <div class="doc-card">
-      <h3>&#x1F3A8; 涓婚骞诲寲</h3>
-      <p>KinSU 鍐呯疆寮哄ぇ鐨勪富棰樺紩鎿庯紝鏀寔鍔ㄦ€佸彇鑹层€佸绉嶉厤鑹查鏍煎拰瀛椾綋閫夋嫨锛岃浣犵殑绠＄悊鍣ㄧ嫭涓€鏃犱簩銆?/p>
-      <ul>
-        <li>15 绉嶅叧閿壊 + 8 绉嶈皟鑹叉澘椋庢牸</li>
-        <li>2021/2025 鍙岃壊褰╄鑼?/li>
-        <li>iPhone 椋庢牸瀛椾綋骞诲寲</li>
-        <li>瀹炴椂棰勮锛屾墍瑙佸嵆鎵€寰?/li>
-      </ul>
-    </div>
-    <div class="doc-card">
-      <h3>&#x1F512; 瀹夊叏闃插尽</h3>
-      <p>KinSU 缁忚繃鍏ㄩ潰鐨勫畨鍏ㄥ姞鍥猴紝淇浜?21 涓畨鍏ㄦ紡娲烇紝鍖呮嫭鍛戒护娉ㄥ叆銆佽矾寰勭┛瓒娿€乀OCTOU 绔炰簤鏉′欢绛夈€?/p>
-      <ul>
-        <li>鍛戒护娉ㄥ叆闃叉姢锛堝弬鏁板寲璋冪敤锛?/li>
-        <li>璺緞绌胯秺闃叉姢锛堣矾寰勮鑼冨寲锛?/li>
-        <li>WebUI URI 娉ㄥ叆闃叉姢</li>
-        <li>妯″潡瀹夎鑴氭湰瀹夊叏鍔犲浐</li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-<div class="section" id="guide">
-  <h2 class="section-title">鏂版墜鍐掗櫓鎸囧崡</h2>
-  <p class="section-desc">浠庨浂寮€濮嬬殑 Root 鍐掗櫓锛屽彧闇€绠€鍗曞嚑姝ュ嵆鍙笍涓婃梾閫?/p>
-  <div class="step-list">
-    <div class="step">
-      <div class="step-num">1</div>
-      <h3>瑙ｉ攣 Bootloader</h3>
-      <p>棣栧厛闇€瑕佽В閿佽澶囩殑 Bootloader锛岃繖鏄€氬線寮備笘鐣岀殑鍏ュ彛銆備笉鍚屽巶鍟嗙殑瑙ｉ攣鏂瑰紡鍚勫紓锛岃鏌ラ槄璁惧瀵瑰簲鏁欑▼銆?/p>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <h3>鍒峰叆 KinSU 鍐呮牳</h3>
-      <p>涓嬭浇瀵瑰簲璁惧鐨?KinSU 鍐呮牳闀滃儚锛岄€氳繃 <code>fastboot flash boot</code> 鎴?<code>fastboot flash init_boot</code> 鍒峰叆璁惧銆?/p>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <h3>瀹夎 KinSU 绠＄悊鍣?/h3>
-      <p>浠?<a href="https://github.com/Spring-bulid/KinSU/releases/latest" style="color:var(--primary-light)">GitHub Releases</a> 涓嬭浇鏈€鏂扮増绠＄悊鍣?APK 骞跺畨瑁咃紝杩欐槸浣犲啋闄╃殑鎸囨尌涓績銆?/p>
-    </div>
-    <div class="step">
-      <div class="step-num">4</div>
-      <h3>寮€鍚啋闄?/h3>
-      <p>鎵撳紑绠＄悊鍣紝纭鐘舵€佹樉绀恒€屽伐浣滀腑銆嶏紝鍗冲彲寮€濮嬪畨瑁呮ā鍧椼€佹巿鏉冨簲鐢紝浜彈 Root 鐨勫姏閲忥紒</p>
-    </div>
-  </div>
-</div>
-
-<div class="section" id="compare">
-  <h2 class="section-title">鍐掗櫓鑰呭叕浼氬姣?/h2>
-  <p class="section-desc">KinSU 涓庡叾浠?Root 鏂规鐨勮兘鍔涘姣旓紝涓€鐩簡鐒?/p>
-  <table class="compare-table">
-    <thead>
-      <tr><th>鑳藉姏</th><th>KinSU</th><th>KernelSU</th><th>Magisk</th></tr>
-    </thead>
-    <tbody>
-      <tr><td>鍐呮牳绾?Root</td><td class="yes">&#x2713;</td><td class="yes">&#x2713;</td><td class="no">&#x2717;</td></tr>
-      <tr><td>LKM 妯″紡</td><td class="yes">&#x2713;</td><td class="no">&#x2717;</td><td class="no">&#x2717;</td></tr>
-      <tr><td>GKI 閫傞厤</td><td class="yes">&#x2713;</td><td class="yes">&#x2713;</td><td class="yes">&#x2713;</td></tr>
-      <tr><td>妯″潡绠＄悊</td><td class="yes">&#x2713;</td><td class="yes">&#x2713;</td><td class="yes">&#x2713;</td></tr>
-      <tr><td>WebUI 鏀寔</td><td class="yes">&#x2713;</td><td class="yes">&#x2713;</td><td class="no">&#x2717;</td></tr>
-      <tr><td>SuSFS 闅愯韩</td><td class="yes">&#x2713;</td><td class="yes">&#x2713;</td><td class="no">&#x2717;</td></tr>
-      <tr><td>KPM 琛ヤ竵</td><td class="yes">&#x2713;</td><td class="no">&#x2717;</td><td class="no">&#x2717;</td></tr>
-      <tr><td>鍔ㄦ€佷富棰?/td><td class="yes">&#x2713;</td><td class="no">&#x2717;</td><td class="no">&#x2717;</td></tr>
-      <tr><td>iPhone 瀛椾綋</td><td class="yes">&#x2713;</td><td class="no">&#x2717;</td><td class="no">&#x2717;</td></tr>
-      <tr><td>瀹夊叏鍔犲浐</td><td class="yes">21 椤逛慨澶?/td><td class="no">&#x2717;</td><td class="no">&#x2717;</td></tr>
-      <tr><td>OTA 妲戒綅淇</td><td class="yes">&#x2713;</td><td class="no">&#x2717;</td><td class="yes">&#x2713;</td></tr>
-    </tbody>
-  </table>
-</div>
-
-<div class="section" id="contributors">
-  <h2 class="section-title">鍐掗櫓鑰呭悕褰?/h2>
-  <p class="section-desc">鎰熻阿 KernelSU 鐨勬墍鏈夎础鐚€咃紝鏄綘浠殑鍔姏閾稿氨浜嗚繖娈靛啋闄╃殑鍩虹煶</p>
-  <div class="contributors">
-    <a href="https://github.com/tiann" target="_blank"><img src="https://avatars.githubusercontent.com/u/4233744?v=4" alt="tiann" title="tiann"></a>
-    <a href="https://github.com/Ylarod" target="_blank"><img src="https://avatars.githubusercontent.com/u/30978685?v=4" alt="Ylarod" title="Ylarod"></a>
-    <a href="https://github.com/YuKongA" target="_blank"><img src="https://avatars.githubusercontent.com/u/70465933?v=4" alt="YuKongA" title="YuKongA"></a>
-    <a href="https://github.com/5ec1cff" target="_blank"><img src="https://avatars.githubusercontent.com/u/56485584?v=4" alt="5ec1cff" title="5ec1cff"></a>
-    <a href="https://github.com/aviraxp" target="_blank"><img src="https://avatars.githubusercontent.com/u/18079988?v=4" alt="aviraxp" title="aviraxp"></a>
-    <a href="https://github.com/igormiguell" target="_blank"><img src="https://avatars.githubusercontent.com/u/134963561?v=4" alt="igormiguell" title="igormiguell"></a>
-    <a href="https://github.com/KOWX712" target="_blank"><img src="https://avatars.githubusercontent.com/u/185127155?v=4" alt="KOWX712" title="KOWX712"></a>
-    <a href="https://github.com/yujincheng08" target="_blank"><img src="https://avatars.githubusercontent.com/u/5022927?v=4" alt="yujincheng08" title="yujincheng08"></a>
-    <a href="https://github.com/dabao1955" target="_blank"><img src="https://avatars.githubusercontent.com/u/79307765?v=4" alt="dabao1955" title="dabao1955"></a>
-    <a href="https://github.com/u9521" target="_blank"><img src="https://avatars.githubusercontent.com/u/63995396?v=4" alt="u9521" title="u9521"></a>
-    <a href="https://github.com/hmtheboy154" target="_blank"><img src="https://avatars.githubusercontent.com/u/39849246?v=4" alt="hmtheboy154" title="hmtheboy154"></a>
-    <a href="https://github.com/Howard20181" target="_blank"><img src="https://avatars.githubusercontent.com/u/40033067?v=4" alt="Howard20181" title="Howard20181"></a>
-    <a href="https://github.com/symbuzzer" target="_blank"><img src="https://avatars.githubusercontent.com/u/9841184?v=4" alt="symbuzzer" title="symbuzzer"></a>
-    <a href="https://github.com/CanerKaraca23" target="_blank"><img src="https://avatars.githubusercontent.com/u/37447503?v=4" alt="CanerKaraca23" title="CanerKaraca23"></a>
-    <a href="https://github.com/TinyHai" target="_blank"><img src="https://avatars.githubusercontent.com/u/34483077?v=4" alt="TinyHai" title="TinyHai"></a>
-    <a href="https://github.com/natsumerinchan" target="_blank"><img src="https://avatars.githubusercontent.com/u/64072399?v=4" alt="natsumerinchan" title="natsumerinchan"></a>
-    <a href="https://github.com/RooGhz720" target="_blank"><img src="https://avatars.githubusercontent.com/u/64605130?v=4" alt="RooGhz720" title="RooGhz720"></a>
-    <a href="https://github.com/s1204IT" target="_blank"><img src="https://avatars.githubusercontent.com/u/52069677?v=4" alt="s1204IT" title="s1204IT"></a>
-    <a href="https://github.com/Dr-TSNG" target="_blank"><img src="https://avatars.githubusercontent.com/u/52071314?v=4" alt="Dr-TSNG" title="Dr-TSNG"></a>
-    <a href="https://github.com/backslashxx" target="_blank"><img src="https://avatars.githubusercontent.com/u/118538522?v=4" alt="backslashxx" title="backslashxx"></a>
-    <a href="https://github.com/AlexLiuDev233" target="_blank"><img src="https://avatars.githubusercontent.com/u/102930921?v=4" alt="AlexLiuDev233" title="AlexLiuDev233"></a>
-    <a href="https://github.com/whyakari" target="_blank"><img src="https://avatars.githubusercontent.com/u/58480908?v=4" alt="whyakari" title="whyakari"></a>
-    <a href="https://github.com/Aquarius223" target="_blank"><img src="https://avatars.githubusercontent.com/u/47409494?v=4" alt="Aquarius223" title="Aquarius223"></a>
-    <a href="https://github.com/skbeh" target="_blank"><img src="https://avatars.githubusercontent.com/u/60107333?v=4" alt="skbeh" title="skbeh"></a>
-    <a href="https://github.com/diphons" target="_blank"><img src="https://avatars.githubusercontent.com/u/9562747?v=4" alt="diphons" title="diphons"></a>
-    <a href="https://github.com/rsuntk" target="_blank"><img src="https://avatars.githubusercontent.com/u/90097027?v=4" alt="rsuntk" title="rsuntk"></a>
-    <a href="https://github.com/Hikari-no-Tenshi" target="_blank"><img src="https://avatars.githubusercontent.com/u/16803494?v=4" alt="Hikari-no-Tenshi" title="Hikari-no-Tenshi"></a>
-    <a href="https://github.com/ygorigor" target="_blank"><img src="https://avatars.githubusercontent.com/u/1684359?v=4" alt="ygorigor" title="ygorigor"></a>
-    <a href="https://github.com/raystef66" target="_blank"><img src="https://avatars.githubusercontent.com/u/42908970?v=4" alt="raystef66" title="raystef66"></a>
-    <a href="https://github.com/jeffpeng3" target="_blank"><img src="https://avatars.githubusercontent.com/u/54392299?v=4" alt="jeffpeng3" title="jeffpeng3"></a>
-    <a href="https://github.com/Coconutat" target="_blank"><img src="https://avatars.githubusercontent.com/u/85353552?v=4" alt="Coconutat" title="Coconutat"></a>
-    <a href="https://github.com/Kaitul" target="_blank"><img src="https://avatars.githubusercontent.com/u/42119227?v=4" alt="Kaitul" title="Kaitul"></a>
-    <a href="https://github.com/aaaaaaaa-815" target="_blank"><img src="https://avatars.githubusercontent.com/u/84086386?v=4" alt="aaaaaaaa-815" title="aaaaaaaa-815"></a>
-    <a href="https://github.com/Rem01Gaming" target="_blank"><img src="https://avatars.githubusercontent.com/u/85148357?v=4" alt="Rem01Gaming" title="Rem01Gaming"></a>
-    <a href="https://github.com/longhuan1999" target="_blank"><img src="https://avatars.githubusercontent.com/u/43313501?v=4" alt="longhuan1999" title="longhuan1999"></a>
-    <a href="https://github.com/lightsummer233" target="_blank"><img src="https://avatars.githubusercontent.com/u/93428659?v=4" alt="lightsummer233" title="lightsummer233"></a>
-    <a href="https://github.com/Fede2782" target="_blank"><img src="https://avatars.githubusercontent.com/u/78815152?v=4" alt="Fede2782" title="Fede2782"></a>
-    <a href="https://github.com/GustavoMends" target="_blank"><img src="https://avatars.githubusercontent.com/u/61030956?v=4" alt="GustavoMends" title="GustavoMends"></a>
-    <a href="https://github.com/chise0713" target="_blank"><img src="https://avatars.githubusercontent.com/u/123655015?v=4" alt="chise0713" title="chise0713"></a>
-    <a href="https://github.com/JasonKhew96" target="_blank"><img src="https://avatars.githubusercontent.com/u/29531167?v=4" alt="JasonKhew96" title="JasonKhew96"></a>
-    <a href="https://github.com/sreeshankark" target="_blank"><img src="https://avatars.githubusercontent.com/u/114847933?v=4" alt="sreeshankark" title="sreeshankark"></a>
-    <a href="https://github.com/lateautumn233" target="_blank"><img src="https://avatars.githubusercontent.com/u/63851402?v=4" alt="lateautumn233" title="lateautumn233"></a>
-    <a href="https://github.com/sakana164" target="_blank"><img src="https://avatars.githubusercontent.com/u/76257039?v=4" alt="sakana164" title="sakana164"></a>
-    <a href="https://github.com/y0geshx" target="_blank"><img src="https://avatars.githubusercontent.com/u/92950980?v=4" alt="y0geshx" title="y0geshx"></a>
-    <a href="https://github.com/shatyuka" target="_blank"><img src="https://avatars.githubusercontent.com/u/31368738?v=4" alt="shatyuka" title="shatyuka"></a>
-    <a href="https://github.com/XiaoTong6666" target="_blank"><img src="https://avatars.githubusercontent.com/u/110387028?v=4" alt="XiaoTong6666" title="XiaoTong6666"></a>
-    <a href="https://github.com/trinhloivn" target="_blank"><img src="https://avatars.githubusercontent.com/u/72311759?v=4" alt="trinhloivn" title="trinhloivn"></a>
-    <a href="https://github.com/SsageParuders" target="_blank"><img src="https://avatars.githubusercontent.com/u/75780727?v=4" alt="SsageParuders" title="SsageParuders"></a>
-    <a href="https://github.com/Azure-Helper" target="_blank"><img src="https://avatars.githubusercontent.com/u/103818282?v=4" alt="Azure-Helper" title="Azure-Helper"></a>
-    <a href="https://github.com/Scirese" target="_blank"><img src="https://avatars.githubusercontent.com/u/62688390?v=4" alt="Scirese" title="Scirese"></a>
-    <a href="https://github.com/AndroPlus-org" target="_blank"><img src="https://avatars.githubusercontent.com/u/4242402?v=4" alt="AndroPlus-org" title="AndroPlus-org"></a>
-    <a href="https://github.com/rifsxd" target="_blank"><img src="https://avatars.githubusercontent.com/u/33044977?v=4" alt="rifsxd" title="rifsxd"></a>
-    <a href="https://github.com/zhantech" target="_blank"><img src="https://avatars.githubusercontent.com/u/25213721?v=4" alt="zhantech" title="zhantech"></a>
-    <a href="https://github.com/Royna2544" target="_blank"><img src="https://avatars.githubusercontent.com/u/69458352?v=4" alt="Royna2544" title="Royna2544"></a>
-    <a href="https://github.com/Bot-wxt1221" target="_blank"><img src="https://avatars.githubusercontent.com/u/74451279?v=4" alt="Bot-wxt1221" title="Bot-wxt1221"></a>
-    <a href="https://github.com/asuka-mio" target="_blank"><img src="https://avatars.githubusercontent.com/u/43900799?v=4" alt="asuka-mio" title="asuka-mio"></a>
-    <a href="https://github.com/hosizoraru" target="_blank"><img src="https://avatars.githubusercontent.com/u/63982994?v=4" alt="hosizoraru" title="hosizoraru"></a>
-    <a href="https://github.com/F-19-F" target="_blank"><img src="https://avatars.githubusercontent.com/u/58457605?v=4" alt="F-19-F" title="F-19-F"></a>
-    <a href="https://github.com/qwerty472123" target="_blank"><img src="https://avatars.githubusercontent.com/u/5781325?v=4" alt="qwerty472123" title="qwerty472123"></a>
-    <a href="https://github.com/ArthurCyy" target="_blank"><img src="https://avatars.githubusercontent.com/u/37627147?v=4" alt="ArthurCyy" title="ArthurCyy"></a>
-    <a href="https://github.com/JohnRTitor" target="_blank"><img src="https://avatars.githubusercontent.com/u/50095635?v=4" alt="JohnRTitor" title="JohnRTitor"></a>
-    <a href="https://github.com/lamprose" target="_blank"><img src="https://avatars.githubusercontent.com/u/29279979?v=4" alt="lamprose" title="lamprose"></a>
-    <a href="https://github.com/OnlyTomInSecond" target="_blank"><img src="https://avatars.githubusercontent.com/u/31297720?v=4" alt="OnlyTomInSecond" title="OnlyTomInSecond"></a>
-    <a href="https://github.com/salvogiangri" target="_blank"><img src="https://avatars.githubusercontent.com/u/13062958?v=4" alt="salvogiangri" title="salvogiangri"></a>
-    <a href="https://github.com/Pegioner" target="_blank"><img src="https://avatars.githubusercontent.com/u/87282574?v=4" alt="Pegioner" title="Pegioner"></a>
-    <a href="https://github.com/fadlyas07" target="_blank"><img src="https://avatars.githubusercontent.com/u/51447049?v=4" alt="fadlyas07" title="fadlyas07"></a>
-    <a href="https://github.com/DevZillion" target="_blank"><img src="https://avatars.githubusercontent.com/u/77107077?v=4" alt="DevZillion" title="DevZillion"></a>
-    <a href="https://github.com/bryanyee33" target="_blank"><img src="https://avatars.githubusercontent.com/u/65088428?v=4" alt="bryanyee33" title="bryanyee33"></a>
-    <a href="https://github.com/DamnVinhHung" target="_blank"><img src="https://avatars.githubusercontent.com/u/263672336?v=4" alt="DamnVinhHung" title="DamnVinhHung"></a>
-    <a href="https://github.com/chen2021-web" target="_blank"><img src="https://avatars.githubusercontent.com/u/83762621?v=4" alt="chen2021-web" title="chen2021-web"></a>
-    <a href="https://github.com/frickypickle" target="_blank"><img src="https://avatars.githubusercontent.com/u/61328707?v=4" alt="frickypickle" title="frickypickle"></a>
-    <a href="https://github.com/hopez13" target="_blank"><img src="https://avatars.githubusercontent.com/u/140780838?v=4" alt="hopez13" title="hopez13"></a>
-    <a href="https://github.com/huangsijun17" target="_blank"><img src="https://avatars.githubusercontent.com/u/31504595?v=4" alt="huangsijun17" title="huangsijun17"></a>
-    <a href="https://github.com/loogeo" target="_blank"><img src="https://avatars.githubusercontent.com/u/2646406?v=4" alt="loogeo" title="loogeo"></a>
-    <a href="https://github.com/rhjdvsgsgks" target="_blank"><img src="https://avatars.githubusercontent.com/u/26178113?v=4" alt="rhjdvsgsgks" title="rhjdvsgsgks"></a>
-    <a href="https://github.com/VenturX" target="_blank"><img src="https://avatars.githubusercontent.com/u/67334583?v=4" alt="VenturX" title="VenturX"></a>
-    <a href="https://github.com/silvzr" target="_blank"><img src="https://avatars.githubusercontent.com/u/117378129?v=4" alt="silvzr" title="silvzr"></a>
-    <a href="https://github.com/ukriu" target="_blank"><img src="https://avatars.githubusercontent.com/u/80760888?v=4" alt="ukriu" title="ukriu"></a>
-    <a href="https://github.com/naicfeng" target="_blank"><img src="https://avatars.githubusercontent.com/u/18218380?v=4" alt="naicfeng" title="naicfeng"></a>
-    <a href="https://github.com/HChenX" target="_blank"><img src="https://avatars.githubusercontent.com/u/123531821?v=4" alt="HChenX" title="HChenX"></a>
-    <a href="https://github.com/Tools-cx-app" target="_blank"><img src="https://avatars.githubusercontent.com/u/127004703?v=4" alt="Tools-cx-app" title="Tools-cx-app"></a>
-    <a href="https://github.com/Jprimero15" target="_blank"><img src="https://avatars.githubusercontent.com/u/17698387?v=4" alt="Jprimero15" title="Jprimero15"></a>
-    <a href="https://github.com/CEKIKOFGAMERS" target="_blank"><img src="https://avatars.githubusercontent.com/u/66932561?v=4" alt="CEKIKOFGAMERS" title="CEKIKOFGAMERS"></a>
-    <a href="https://github.com/th1nhhdk" target="_blank"><img src="https://avatars.githubusercontent.com/u/58503327?v=4" alt="th1nhhdk" title="th1nhhdk"></a>
-    <a href="https://github.com/supechicken" target="_blank"><img src="https://avatars.githubusercontent.com/u/73414985?v=4" alt="supechicken" title="supechicken"></a>
-    <a href="https://github.com/TheNoFace" target="_blank"><img src="https://avatars.githubusercontent.com/u/3072090?v=4" alt="TheNoFace" title="TheNoFace"></a>
-    <a href="https://github.com/Abdelhay-Ali" target="_blank"><img src="https://avatars.githubusercontent.com/u/118073201?v=4" alt="Abdelhay-Ali" title="Abdelhay-Ali"></a>
-    <a href="https://github.com/ALEX5402" target="_blank"><img src="https://avatars.githubusercontent.com/u/76860596?v=4" alt="ALEX5402" title="ALEX5402"></a>
-    <a href="https://github.com/flame-0" target="_blank"><img src="https://avatars.githubusercontent.com/u/40175769?v=4" alt="flame-0" title="flame-0"></a>
-    <a href="https://github.com/GiovanYCringe" target="_blank"><img src="https://avatars.githubusercontent.com/u/106202775?v=4" alt="GiovanYCringe" title="GiovanYCringe"></a>
-    <a href="https://github.com/d9k6s" target="_blank"><img src="https://avatars.githubusercontent.com/u/1701912?v=4" alt="d9k6s" title="d9k6s"></a>
-    <a href="https://github.com/arter97" target="_blank"><img src="https://avatars.githubusercontent.com/u/5400990?v=4" alt="arter97" title="arter97"></a>
-    <a href="https://github.com/ponfertato" target="_blank"><img src="https://avatars.githubusercontent.com/u/24917461?v=4" alt="ponfertato" title="ponfertato"></a>
-    <a href="https://github.com/Mufanc" target="_blank"><img src="https://avatars.githubusercontent.com/u/47652878?v=4" alt="Mufanc" title="Mufanc"></a>
-    <a href="https://github.com/Astridxx" target="_blank"><img src="https://avatars.githubusercontent.com/u/27141679?v=4" alt="Astridxx" title="Astridxx"></a>
-    <a href="https://github.com/pixincreate" target="_blank"><img src="https://avatars.githubusercontent.com/u/69745008?v=4" alt="pixincreate" title="pixincreate"></a>
-    <a href="https://github.com/WeeAris" target="_blank"><img src="https://avatars.githubusercontent.com/u/123524343?v=4" alt="WeeAris" title="WeeAris"></a>
-  </div>
-</div>
-
-<footer>
-  <div class="links">
-    <a href="https://github.com/Spring-bulid/KinSU">GitHub</a>
-    <a href="https://github.com/Spring-bulid/KinSU-Modules">妯″潡浠撳簱</a>
-    <a href="https://github.com/Spring-bulid/KinSU/releases">涓嬭浇</a>
-    <a href="https://github.com/tiann/KernelSU">KernelSU</a>
-  </div>
-  <p class="copy">KinSU is based on KernelSU by tiann. This project is open source under GPL-3.0.</p>
-</footer>
 
 <script>
-// Load anime background - use multiple APIs for reliability
-var bgApis = [
-  'https://acg.yaohud.cn/dm/acg.php',
-  'https://api.oick.cn/random/api.php',
-  'https://api.suyanw.cn/api/comic/api.php'
-];
-var bgIndex = 0;
-function loadBg(){
-  var el = document.getElementById('bgAnime');
-  var url = bgApis[bgIndex] + '?_t=' + Date.now();
-  el.style.backgroundImage = 'url(' + url + ')';
-  bgIndex = (bgIndex + 1) % bgApis.length;
-}
-loadBg();
-setInterval(loadBg, 20000);
+(function(){
+'use strict';
 
-// Smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach(function(a){
-  a.addEventListener('click',function(e){
-    e.preventDefault();
-    var t=document.querySelector(this.getAttribute('href'));
-    if(t)t.scrollIntoView({behavior:'smooth',block:'start'});
+// ====== All Chinese text in JS to avoid encoding issues ======
+var T={
+  navHome:'\u9996\u9875',navDocs:'\u6587\u6863',
+  heroTitle:'KinSU',
+  heroSubtitle:'\u7a7f\u8d8a\u5185\u6838\u7684\u5f02\u4e16\u754c Root \u5192\u9669',
+  heroDesc:'\u4ee5 LKM \u4e3a\u5251\uff0c\u65a9\u65ad\u6743\u9650\u7684\u67b7\u9501',
+  btnAdventure:'\u5f00\u542f\u5192\u9669',btnGuide:'\u9605\u8bfb\u653b\u7565',
+  featuresTitle:'\u5192\u9669\u8005\u7684\u529b\u91cf',
+  featuresDesc:'\u638c\u63e1\u8fd9\u4e9b\u6838\u5fc3\u80fd\u529b\uff0c\u5f00\u542f\u4f60\u7684\u5185\u6838\u4e4b\u65c5',
+  gsTitle:'\u5f00\u59cb\u5192\u9669',gsDesc:'\u53ea\u9700\u56db\u6b65\uff0c\u5373\u53ef\u8e0f\u4e0a\u5185\u6838\u4e4b\u65c5',
+  compTitle:'\u5192\u9669\u8005\u5bf9\u6bd4',compDesc:'\u4e0e\u5176\u4ed6 Root \u65b9\u6848\u7684\u5168\u9762\u5bf9\u6bd4',
+  contribTitle:'\u5192\u9669\u8005\u540d\u518c',contribDesc:'\u611f\u8c22\u6bcf\u4e00\u4f4d\u4e3a KinSU \u8d21\u732e\u529b\u91cf\u7684\u5192\u9669\u8005',
+  footer:'\u00a9 2024 KinSU \u9879\u76ee\u7ec4 \u00b7 \u4ee5\u5f00\u6e90\u4e4b\u540d\uff0c\u884c\u81ea\u7531\u4e4b\u5f92',
+  tocLabel:'\u76ee\u5f55',sidebarTitle:'KinSU \u6587\u6863',
+  updatedLabel:'\u66f4\u65b0\u4e8e',readingTime:'\u9884\u8ba1\u9605\u8bfb',minute:'\u5206\u949f'
+};
+
+var features=[
+  {icon:'\u2694\ufe0f',name:'LKM \u57fa\u51c6\u6a21\u5f0f',desc:'\u4ee5\u53ef\u52a0\u8f7d\u5185\u6838\u6a21\u5757\u4e3a\u5192\u9669\u7684\u57fa\u77f3\uff0c\u65e0\u9700\u91cd\u7f16\u8bd1\u5185\u6838\u5373\u53ef\u83b7\u5f97 Root \u529b\u91cf'},
+  {icon:'\ud83c\udfb2',name:'GKI \u5f02\u4e16\u754c\u9002\u914d',desc:'\u5b8c\u7f8e\u9002\u914d Android GKI \u8bbe\u5907\u7684\u5185\u6838\u7ea7 Root'},
+  {icon:'\ud83d\udcd3',name:'\u6a21\u5757\u9b54\u6cd5\u4e66',desc:'\u5f3a\u5927\u7684\u6a21\u5757\u7ba1\u7406\u7cfb\u7edf\uff0c\u652f\u6301 WebUI \u53ef\u89c6\u5316\u64cd\u4f5c'},
+  {icon:'\ud83d\udee1\ufe0f',name:'\u8d85\u7ea7\u7528\u6237\u6743\u9650',desc:'\u7cbe\u7ec6\u7684\u5e94\u7528\u914d\u7f6e\u6587\u4ef6\u7cfb\u7edf\uff0c\u4e3a\u6bcf\u4e00\u4f4d\u5192\u9669\u8005\u91cf\u8eab\u5b9a\u5236 Root \u6743\u9650'},
+  {icon:'\ud83c\udfa8',name:'\u4e3b\u9898\u5e7b\u5316\u672f',desc:'\u52a8\u6001\u53d6\u8272\u4e3b\u9898\u5f15\u64ce\uff0c\u652f\u6301 iPhone \u98ce\u683c\u5b57\u4f53\u5e7b\u5316'},
+  {icon:'\ud83c\udf0d',name:'\u591a\u8bed\u8a00\u7ed3\u754c',desc:'\u8de8\u8d8a\u8bed\u8a00\u4e4b\u58c1\uff0c\u652f\u6301\u4e2d\u6587\u3001\u82f1\u8bed\u3001\u4fc4\u8bed\u3001\u65e5\u8bed\u7b49\u591a\u79cd\u8bed\u8a00'}
+];
+
+var steps=[
+  {num:'1',title:'\u89e3\u9501 Bootloader',desc:'\u89e3\u9501\u8bbe\u5907\u7684 Bootloader\uff0c\u4e3a\u5192\u9669\u94fa\u5e73\u9053\u8def'},
+  {num:'2',title:'\u5237\u5165 KinSU \u5185\u6838',desc:'\u901a\u8fc7 fastboot \u5237\u5165 KinSU \u5185\u6838\u955c\u50cf'},
+  {num:'3',title:'\u5b89\u88c5\u7ba1\u7406\u5668',desc:'\u5b89\u88c5 KinSU Manager \u5e94\u7528\uff0c\u638c\u63e1\u5192\u9669\u6307\u6325\u6743'},
+  {num:'4',title:'\u5f00\u542f Root \u4e4b\u65c5',desc:'\u914d\u7f6e\u8d85\u7ea7\u7528\u6237\u3001\u5b89\u88c5\u6a21\u5757\uff0c\u5c3d\u60c5\u63a2\u7d22'}
+];
+
+var compRows=[
+  ['LKM \u5185\u6838\u6a21\u5757\u6a21\u5f0f',true,false,false],
+  ['GKI \u8bbe\u5907\u9002\u914d',true,true,false],
+  ['\u6a21\u5757 WebUI \u652f\u6301',true,false,false],
+  ['\u5e94\u7528\u914d\u7f6e\u6587\u4ef6\u7cfb\u7edf',true,false,false],
+  ['\u52a8\u6001\u4e3b\u9898\u5f15\u64ce',true,false,false],
+  ['SuSFS \u9690\u8eab\u529f\u80fd',true,true,false],
+  ['KPM \u5185\u6838\u8865\u4e01',true,false,false],
+  ['\u5b89\u5168\u4fee\u590d\u6570\u91cf','21+','5+','0'],
+  ['\u5f00\u6e90\u534f\u8bae','GPL-2.0','GPL-2.0','GPL-3.0']
+];
+
+var contribIds=['wS4l1wejYl','Y9hl1wejYl','knnt1wejYl','7I4f1wejYl','F7I21wejYl','fxUa1wejYl','h7tO1wejYl','6blU1wejYl','BSXa1wejYl','jGwH1wejYl','2iME1wejYl','yf7U1wejYl','uDmW1wejYl','MORu1wejYl','acZs1wejYl','LBsU1wejYl','D0mk1wejYl','Woy91wejYl','Hxv41wejYl','romq1wejYl','4D2E1wejYl','XeJl1wejYl','be1p1wejYl','HdYu1wejYl','93CE1wejYl','5Xpw1wejYl','Io5J1wejYl','ksm51wejYl','PFd71wejYl','V4D21wejYl','pgQp1wejYl','8YR71wejYl','ZNVY1wejYl','qrJV1wejYl','Q1jU1wejYl','UrBU1wejYl'];
+
+// ====== Document Tree ======
+var docTree=[
+  {id:'quickstart',icon:'\ud83d\udcd6',title:'\u5feb\u901f\u5f00\u59cb',children:[
+    {id:'install',title:'\u5b89\u88c5\u6307\u5357'},
+    {id:'flash-kernel',title:'\u5237\u5165\u5185\u6838'},
+    {id:'first-setup',title:'\u9996\u6b21\u914d\u7f6e'}
+  ]},
+  {id:'core',icon:'\ud83d\udee1\ufe0f',title:'\u6838\u5fc3\u529f\u80fd',children:[
+    {id:'lkm-mode',title:'LKM \u6a21\u5f0f\u8be6\u89e3'},
+    {id:'gki-adapt',title:'GKI \u8bbe\u5907\u9002\u914d'},
+    {id:'superuser',title:'\u8d85\u7ea7\u7528\u6237\u7ba1\u7406'},
+    {id:'module-system',title:'\u6a21\u5757\u7cfb\u7edf'}
+  ]},
+  {id:'advanced',icon:'\u26a1',title:'\u9ad8\u7ea7\u529f\u80fd',children:[
+    {id:'susfs',title:'SuSFS \u9690\u8eab\u672f'},
+    {id:'kpm',title:'KPM \u5185\u6838\u8865\u4e01'},
+    {id:'theme',title:'\u4e3b\u9898\u5e7b\u5316\u672f'}
+  ]},
+  {id:'security',icon:'\ud83d\udd12',title:'\u5b89\u5168\u52a0\u56fa',children:[
+    {id:'security-fixes',title:'\u5b89\u5168\u4fee\u590d\u6e05\u5355'},
+    {id:'cmd-injection',title:'\u547d\u4ee4\u6ce8\u5165\u9632\u62a4'},
+    {id:'path-traversal',title:'\u8def\u5f84\u7a7f\u8d8a\u9632\u62a4'}
+  ]},
+  {id:'dev',icon:'\ud83d\udcdd',title:'\u5f00\u53d1\u6307\u5357',children:[
+    {id:'module-dev',title:'\u6a21\u5757\u5f00\u53d1'},
+    {id:'webui-dev',title:'WebUI \u5f00\u53d1'},
+    {id:'contribute',title:'\u8d21\u732e\u4ee3\u7801'}
+  ]}
+];
+
+// ====== Document Content ======
+var D={};
+
+D['install']={title:'\u5b89\u88c5\u6307\u5357',cat:'\u5feb\u901f\u5f00\u59cb',updated:'2024-12-15',html:function(){
+return h2('\u524d\u7f6e\u8981\u6c42')+
+p('\u5728\u5f00\u59cb\u5b89\u88c5 KinSU \u4e4b\u524d\uff0c\u8bf7\u786e\u4fdd\u4f60\u7684\u8bbe\u5907\u548c\u73af\u5883\u6ee1\u8db3\u4ee5\u4e0b\u8981\u6c42\uff1a')+
+ul(['\u4e00\u53f0\u5df2\u89e3\u9501 Bootloader \u7684 Android \u8bbe\u5907','\u5df2\u5b89\u88c5 ADB \u548c Fastboot \u5de5\u5177\uff08Android SDK Platform Tools\uff09','\u8bbe\u5907\u5df2\u5f00\u542f USB \u8c03\u8bd5\u6a21\u5f0f','\u5df2\u5907\u4efd\u91cd\u8981\u6570\u636e\uff08\u5237\u5165\u5185\u6838\u53ef\u80fd\u5bfc\u81f4\u6570\u636e\u4e22\u5931\uff09','\u7535\u91cf\u5145\u8db3\uff08\u5efa\u8bae 50% \u4ee5\u4e0a\uff09'])+
+callout('warning','\u26a0\ufe0f \u5237\u5165\u5185\u6838\u5b58\u5728\u4e00\u5b9a\u98ce\u9669\uff0c\u8bf7\u786e\u4fdd\u4f60\u4e86\u89e3\u76f8\u5173\u64cd\u4f5c\u5e76\u5df2\u505a\u597d\u6570\u636e\u5907\u4efd\u3002\u5982\u679c\u8bbe\u5907\u51fa\u73b0\u95ee\u9898\uff0c\u8bf7\u901a\u8fc7\u5237\u5165\u539f\u59cb\u5185\u6838\u955c\u50cf\u6062\u590d\u3002')+
+h2('\u4e0b\u8f7d KinSU')+
+p('\u524d\u5f80 GitHub Releases \u9875\u9762\u4e0b\u8f7d\u9002\u5408\u4f60\u8bbe\u5907\u7684 KinSU \u7248\u672c\uff1a')+
+pre('# \u4e0b\u8f7d\u6700\u65b0\u7248\u672c\n# \u8bf7\u524d\u5f80 https://github.com/Spring-bulid/KinSU/releases/latest\n\n# GKI \u8bbe\u5907\u4e0b\u8f7d\u5bf9\u5e94\u5185\u6838\u7248\u672c\u7684\u955c\u50cf\n# \u975e GKI \u8bbe\u5907\u9700\u8981\u81ea\u884c\u7f16\u8bd1\u5185\u6838')+
+p('\u4e0b\u8f7d\u65f6\u8bf7\u6ce8\u610f\u9009\u62e9\u4e0e\u4f60\u8bbe\u5907\u5185\u6838\u7248\u672c\u5339\u914d\u7684\u955c\u50cf\u6587\u4ef6\u3002GKI \u8bbe\u5907\u7684\u955c\u50cf\u6587\u4ef6\u540d\u901a\u5e38\u5305\u542b\u5185\u6838\u7248\u672c\u53f7\uff0c\u4f8b\u5982 KinSU-5.10.xxx.zip\u3002')+
+h2('\u68c0\u67e5\u8bbe\u5907\u4fe1\u606f')+
+p('\u5728\u5b89\u88c5\u524d\uff0c\u5efa\u8bae\u5148\u786e\u8ba4\u4f60\u7684\u8bbe\u5907\u4fe1\u606f\uff1a')+
+pre('# \u67e5\u770b\u8bbe\u5907\u578b\u53f7\nadb shell getprop ro.product.model\n\n# \u67e5\u770b\u5185\u6838\u7248\u672c\nadb shell uname -r\n\n# \u67e5\u770b\u662f\u5426\u4e3a GKI \u8bbe\u5907\nadb shell getprop ro.boot.vbmeta.device_state\n\n# \u67e5\u770b\u5f53\u524d\u5206\u533a\nadb shell getprop ro.boot.slot_suffix')+
+callout('info','\u2139\ufe0f GKI\uff08Generic Kernel Image\uff09\u662f Android 12 \u53ca\u4ee5\u4e0a\u7248\u672c\u5f15\u5165\u7684\u901a\u7528\u5185\u6838\u955c\u50cf\u6807\u51c6\u3002\u5982\u679c\u4f60\u7684\u8bbe\u5907\u8fd0\u884c Android 12+ \u4e14\u652f\u6301 GKI\uff0c\u5219\u53ef\u4ee5\u76f4\u63a5\u4f7f\u7528\u9884\u7f16\u8bd1\u7684 KinSU \u5185\u6838\u955c\u50cf\u3002')+
+h2('\u5b89\u88c5\u6b65\u9aa4')+
+h3('1. \u89e3\u9501 Bootloader')+
+p('\u5982\u679c\u4f60\u8fd8\u6ca1\u6709\u89e3\u9501 Bootloader\uff0c\u8bf7\u5148\u5b8c\u6210\u8fd9\u4e00\u6b65\uff1a')+
+pre('# \u8fdb\u5165 Bootloader \u6a21\u5f0f\nadb reboot bootloader\n\n# \u89e3\u9501 Bootloader\uff08\u4e0d\u540c\u5382\u5546\u547d\u4ee4\u53ef\u80fd\u4e0d\u540c\uff09\nfastboot flashing unlock\n# \u6216\nfastboot oem unlock')+
+h3('2. \u5237\u5165 KinSU \u5185\u6838')+
+p('\u6839\u636e\u4f60\u7684\u8bbe\u5907\u7c7b\u578b\uff0c\u9009\u62e9\u5bf9\u5e94\u7684\u5237\u5165\u65b9\u5f0f\uff08\u8be6\u89c1\u300c\u5237\u5165\u5185\u6838\u300d\u6587\u6863\uff09\u3002')+
+h3('3. \u5b89\u88c5 KinSU Manager')+
+p('\u5237\u5165\u5185\u6838\u540e\u91cd\u542f\u8bbe\u5907\uff0c\u5b89\u88c5 KinSU Manager \u5e94\u7528\u3002\u4f60\u53ef\u4ee5\u4ece GitHub Releases \u4e0b\u8f7d\u6700\u65b0\u7248\u672c\u7684 Manager APK\u3002')+
+h3('4. \u9a8c\u8bc1\u5b89\u88c5')+
+p('\u6253\u5f00 KinSU Manager\uff0c\u5982\u679c\u663e\u793a\u5185\u6838\u7248\u672c\u4fe1\u606f\u4e14\u8d85\u7ea7\u7528\u6237\u529f\u80fd\u53ef\u7528\uff0c\u5219\u8bf4\u660e\u5b89\u88c5\u6210\u529f\u3002')+
+callout('tip','\ud83d\udca1 \u5982\u679c Manager \u663e\u793a\u300c\u672a\u5b89\u88c5\u300d\u6216\u300c\u72b6\u6001\u5f02\u5e38\u300d\uff0c\u8bf7\u68c0\u67e5\u5185\u6838\u7248\u672c\u662f\u5426\u4e0e\u955c\u50cf\u5339\u914d\uff0c\u6216\u5c1d\u8bd5\u91cd\u65b0\u5237\u5165\u5185\u6838\u3002');
+}};
+
+D['flash-kernel']={title:'\u5237\u5165\u5185\u6838',cat:'\u5feb\u901f\u5f00\u59cb',updated:'2024-12-15',html:function(){
+return h2('\u5237\u5165\u524d\u51c6\u5907')+
+p('\u5728\u5237\u5165 KinSU \u5185\u6838\u4e4b\u524d\uff0c\u8bf7\u786e\u4fdd\u4f60\u5df2\u5b8c\u6210\u4ee5\u4e0b\u51c6\u5907\u5de5\u4f5c\uff1a')+
+ul(['\u5df2\u89e3\u9501 Bootloader','\u5df2\u4e0b\u8f7d\u5bf9\u5e94\u8bbe\u5907\u7684 KinSU \u5185\u6838\u955c\u50cf','\u5df2\u5b89\u88c5 ADB \u548c Fastboot \u5de5\u5177','\u5df2\u5907\u4efd\u91cd\u8981\u6570\u636e'])+
+h2('GKI \u8bbe\u5907\u5237\u5165')+
+p('GKI\uff08Generic Kernel Image\uff09\u8bbe\u5907\u662f\u8fd0\u884c Android 12 \u53ca\u4ee5\u4e0a\u7248\u672c\u7684\u8bbe\u5907\uff0c\u5b83\u4eec\u4f7f\u7528\u901a\u7528\u5185\u6838\u955c\u50cf\u3002\u5237\u5165\u65b9\u5f0f\u5982\u4e0b\uff1a')+
+pre('# \u5c06\u8bbe\u5907\u8fde\u63a5\u5230\u7535\u8111\uff0c\u8fdb\u5165 Bootloader \u6a21\u5f0f\nadb reboot bootloader\n\n# \u7b49\u5f85\u8bbe\u5907\u8fdb\u5165 Bootloader \u6a21\u5f0f\nfastboot wait-for-device\n\n# \u5237\u5165 KinSU \u5185\u6838\u5230 init_boot \u5206\u533a\nfastboot flash init_boot kinsu-init_boot.img\n\n# \u91cd\u542f\u8bbe\u5907\nfastboot reboot')+
+callout('info','\u2139\ufe0f GKI \u8bbe\u5907\u7684\u5185\u6838\u955c\u50cf\u5b58\u50a8\u5728 init_boot \u5206\u533a\u800c\u975e boot \u5206\u533a\u3002\u8bf7\u52a1\u5fc5\u4f7f\u7528\u6b63\u786e\u7684\u5206\u533a\u540d\u79f0\uff0c\u5426\u5219\u53ef\u80fd\u5bfc\u81f4\u8bbe\u5907\u65e0\u6cd5\u542f\u52a8\u3002')+
+h2('\u975e GKI \u8bbe\u5907\u5237\u5165')+
+p('\u5bf9\u4e8e\u975e GKI \u8bbe\u5907\uff0c\u4f60\u9700\u8981\u81ea\u884c\u7f16\u8bd1\u5185\u6838\u5e76\u96c6\u6210 KinSU\u3002\u5237\u5165\u65b9\u5f0f\u5982\u4e0b\uff1a')+
+pre('# \u8fdb\u5165 Bootloader \u6a21\u5f0f\nadb reboot bootloader\n\n# \u5237\u5165\u7f16\u8bd1\u597d\u7684\u5185\u6838\u955c\u50cf\u5230 boot \u5206\u533a\nfastboot flash boot kinsu-boot.img\n\n# \u91cd\u542f\u8bbe\u5907\nfastboot reboot')+
+h2('OTA \u5206\u533a\u5207\u6362')+
+p('Android \u8bbe\u5907\u4f7f\u7528 A/B \u5206\u533a\u673a\u5236\uff0c\u4f60\u9700\u8981\u786e\u4fdd\u5237\u5165\u5230\u5f53\u524d\u6d3b\u52a8\u5206\u533a\uff1a')+
+pre('# \u67e5\u770b\u5f53\u524d\u6d3b\u52a8\u5206\u533a\nadb shell getprop ro.boot.slot_suffix\n\n# \u5982\u679c\u8f93\u51fa _a\uff0c\u5219\u5237\u5165\u5230 slot_a\nfastboot flash init_boot_a kinsu-init_boot.img\n\n# \u5982\u679c\u8f93\u51fa _b\uff0c\u5219\u5237\u5165\u5230 slot_b\nfastboot flash init_boot_b kinsu-init_boot.img')+
+callout('warning','\u26a0\ufe0f OTA \u66f4\u65b0\u540e\uff0c\u5185\u6838\u53ef\u80fd\u88ab\u66ff\u6362\u4e3a\u539f\u59cb\u5185\u6838\u3002\u8bf7\u5728 OTA \u66f4\u65b0\u540e\u91cd\u65b0\u5237\u5165 KinSU \u5185\u6838\u3002\u5efa\u8bae\u4f7f\u7528 KinSU \u7684 OTA \u81ea\u52a8\u5904\u7406\u529f\u80fd\u3002')+
+h2('\u5e38\u89c1\u95ee\u9898')+
+h3('\u8bbe\u5907\u65e0\u6cd5\u542f\u52a8')+
+p('\u5982\u679c\u5237\u5165\u540e\u8bbe\u5907\u65e0\u6cd5\u542f\u52a8\uff0c\u53ef\u4ee5\u901a\u8fc7\u4ee5\u4e0b\u65b9\u5f0f\u6062\u590d\uff1a')+
+pre('# \u8fdb\u5165 Bootloader \u6a21\u5f0f\uff08\u6309\u4f4f\u97f3\u91cf\u952e + \u7535\u6e90\u952e\uff09\n\n# \u5237\u5165\u539f\u59cb\u5185\u6838\u955c\u50cf\nfastboot flash init_boot original-init_boot.img\n\n# \u91cd\u542f\nfastboot reboot')+
+h3('\u5185\u6838\u7248\u672c\u4e0d\u5339\u914d')+
+p('\u8bf7\u786e\u4fdd\u4e0b\u8f7d\u7684 KinSU \u955c\u50cf\u4e0e\u4f60\u7684\u8bbe\u5907\u5185\u6838\u7248\u672c\u4e00\u81f4\u3002\u53ef\u4ee5\u901a\u8fc7 adb shell uname -r \u67e5\u770b\u5f53\u524d\u5185\u6838\u7248\u672c\u3002');
+}};
+
+D['first-setup']={title:'\u9996\u6b21\u914d\u7f6e',cat:'\u5feb\u901f\u5f00\u59cb',updated:'2024-12-15',html:function(){
+return h2('\u542f\u52a8 KinSU Manager')+
+p('\u5237\u5165\u5185\u6838\u5e76\u91cd\u542f\u8bbe\u5907\u540e\uff0c\u6253\u5f00 KinSU Manager \u5e94\u7528\u3002\u9996\u6b21\u542f\u52a8\u65f6\uff0c\u5e94\u7528\u4f1a\u81ea\u52a8\u68c0\u6d4b\u5185\u6838\u72b6\u6001\u5e76\u5f15\u5bfc\u4f60\u5b8c\u6210\u521d\u59cb\u914d\u7f6e\u3002')+
+h2('\u5b8c\u6210\u521d\u59cb\u5316\u5411\u5bfc')+
+p('KinSU Manager \u9996\u6b21\u542f\u52a8\u65f6\u4f1a\u663e\u793a\u521d\u59cb\u5316\u5411\u5bfc\uff0c\u5e2e\u52a9\u4f60\u5b8c\u6210\u4ee5\u4e0b\u914d\u7f6e\uff1a')+
+ul(['\u8d85\u7ea7\u7528\u6237\u6a21\u5f0f\u9009\u62e9\uff08\u63a8\u8350\u9ed8\u8ba4\u6a21\u5f0f\uff09','\u5e94\u7528\u914d\u7f6e\u6587\u4ef6\u521d\u59cb\u5316','\u6a21\u5757\u5b58\u50a8\u76ee\u5f55\u8bbe\u7f6e','SELinux \u7b56\u7565\u914d\u7f6e'])+
+h2('\u914d\u7f6e\u8d85\u7ea7\u7528\u6237')+
+p('\u8d85\u7ea7\u7528\u6237\u662f KinSU \u7684\u6838\u5fc3\u529f\u80fd\u4e4b\u4e00\u3002\u4f60\u53ef\u4ee5\u5728 Manager \u4e2d\u4e3a\u6bcf\u4e2a\u5e94\u7528\u5355\u72ec\u914d\u7f6e Root \u6743\u9650\uff1a')+
+ol(['\u6253\u5f00 KinSU Manager\uff0c\u8fdb\u5165\u300c\u8d85\u7ea7\u7528\u6237\u300d\u9875\u9762','\u70b9\u51fb\u53f3\u4e0a\u89d2\u7684\u300c+\u300d\u6309\u94ae\u6dfb\u52a0\u5e94\u7528','\u9009\u62e9\u9700\u8981 Root \u6743\u9650\u7684\u5e94\u7528','\u4e3a\u8be5\u5e94\u7528\u914d\u7f6e\u6743\u9650\u6a21\u677f\uff08\u9ed8\u8ba4/\u5e94\u7528\u63a5\u5165/Shell \u6a21\u677f\uff09','\u4fdd\u5b58\u914d\u7f6e'])+
+callout('tip','\ud83d\udca1 \u5efa\u8bae\u53ea\u4e3a\u771f\u6b63\u9700\u8981 Root \u6743\u9650\u7684\u5e94\u7528\u6388\u6743\uff0c\u907f\u514d\u4e3a\u4e0d\u53ef\u4fe1\u7684\u5e94\u7528\u63d0\u4f9b\u8fc7\u591a\u6743\u9650\u3002')+
+h2('\u5b89\u88c5\u6a21\u5757')+
+p('KinSU \u652f\u6301\u901a\u8fc7\u6a21\u5757\u6269\u5c55\u529f\u80fd\u3002\u4f60\u53ef\u4ee5\u4ece\u6a21\u5757\u4ed3\u5e93\u6216\u672c\u5730\u5b89\u88c5\u6a21\u5757\uff1a')+
+ul(['\u4ece\u6a21\u5757\u4ed3\u5e93\u5b89\u88c5\uff1a\u8fdb\u5165\u300c\u6a21\u5757\u300d\u9875\u9762\uff0c\u6d4f\u89c8\u5e76\u5b89\u88c5\u6240\u9700\u6a21\u5757','\u4ece\u672c\u5730\u5b89\u88c5\uff1a\u70b9\u51fb\u300c\u4ece\u672c\u5730\u5b89\u88c5\u300d\uff0c\u9009\u62e9\u5df2\u4e0b\u8f7d\u7684 .zip \u6a21\u5757\u6587\u4ef6'])+
+h2('\u9a8c\u8bc1 Root \u72b6\u6001')+
+p('\u5b8c\u6210\u914d\u7f6e\u540e\uff0c\u4f60\u53ef\u4ee5\u901a\u8fc7\u4ee5\u4e0b\u65b9\u5f0f\u9a8c\u8bc1 Root \u662f\u5426\u6210\u529f\uff1a')+
+pre('# \u5728\u7ec8\u7aef\u6a21\u62df\u5668\u4e2d\u6267\u884c\nadb shell su -c id\n\n# \u5982\u679c\u8f93\u51fa\u5305\u542b uid=0(root)\uff0c\u5219\u8bf4\u660e Root \u6210\u529f\n# uid=0(root) gid=0(root) groups=0(root)')+
+callout('info','\u2139\ufe0f \u5982\u679c su \u547d\u4ee4\u65e0\u6cd5\u6267\u884c\uff0c\u8bf7\u68c0\u67e5 KinSU Manager \u4e2d\u7684\u8d85\u7ea7\u7528\u6237\u914d\u7f6e\u662f\u5426\u5df2\u6b63\u786e\u8bbe\u7f6e\u3002');
+}};
+
+D['lkm-mode']={title:'LKM \u6a21\u5f0f\u8be6\u89e3',cat:'\u6838\u5fc3\u529f\u80fd',updated:'2024-12-15',html:function(){
+return h2('\u4ec0\u4e48\u662f LKM')+
+p('LKM\uff08Loadable Kernel Module\uff0c\u53ef\u52a0\u8f7d\u5185\u6838\u6a21\u5757\uff09\u662f Linux \u5185\u6838\u7684\u4e00\u9879\u6838\u5fc3\u7279\u6027\uff0c\u5141\u8bb8\u5728\u5185\u6838\u8fd0\u884c\u65f6\u52a8\u6001\u52a0\u8f7d\u548c\u5378\u8f7d\u6a21\u5757\uff0c\u800c\u65e0\u9700\u91cd\u65b0\u7f16\u8bd1\u6216\u91cd\u542f\u6574\u4e2a\u5185\u6838\u3002\u8fd9\u610f\u5473\u7740 KinSU \u53ef\u4ee5\u4f5c\u4e3a\u4e00\u4e2a\u5185\u6838\u6a21\u5757\u88ab\u52a0\u8f7d\uff0c\u4ece\u800c\u5728\u5185\u6838\u7a7a\u95f4\u4e2d\u83b7\u5f97\u6700\u9ad8\u6743\u9650\u3002')+
+h2('KinSU \u7684 LKM \u5b9e\u73b0')+
+p('KinSU \u5229\u7528 LKM \u673a\u5236\u5b9e\u73b0\u4e86\u5185\u6838\u7ea7\u7684 Root \u8bbf\u95ee\u3002\u5176\u5de5\u4f5c\u6d41\u7a0b\u5982\u4e0b\uff1a')+
+ol(['\u5185\u6838\u542f\u52a8\u65f6\uff0c\u901a\u8fc7 init \u8fdb\u7a0b\u52a0\u8f7d KinSU \u5185\u6838\u6a21\u5757','\u6a21\u5757\u52a0\u8f7d\u540e\uff0c\u5728\u5185\u6838\u7a7a\u95f4\u4e2d hook \u5173\u952e\u7cfb\u7edf\u8c03\u7528','\u901a\u8fc7 hook \u5b9e\u73b0\u8d85\u7ea7\u7528\u6237\u6743\u9650\u7ba1\u7406\u3001\u6a21\u5757\u52a0\u8f7d\u7b49\u529f\u80fd','\u7528\u6237\u7a7a\u95f4\u7684 Manager \u5e94\u7528\u901a\u8fc7 ioctl \u4e0e\u5185\u6838\u6a21\u5757\u901a\u4fe1'])+
+h2('LKM \u6a21\u5f0f\u7684\u4f18\u52bf')+
+p('\u76f8\u6bd4\u4f20\u7edf\u7684 Root \u65b9\u6848\uff0cLKM \u6a21\u5f0f\u5177\u6709\u4ee5\u4e0b\u663e\u8457\u4f18\u52bf\uff1a')+
+table(['\u7279\u6027','LKM \u6a21\u5f0f','\u4f20\u7edf\u4fee\u6539\u5185\u6838'],[
+  ['\u5b89\u88c5\u65b9\u5f0f','\u52a8\u6001\u52a0\u8f7d\uff0c\u65e0\u9700\u91cd\u7f16\u8bd1\u5185\u6838','\u9700\u8981\u5b8c\u6574\u7f16\u8bd1\u5185\u6838'],
+  ['\u66f4\u65b0\u4fbf\u6377\u6027','\u53ef\u72ec\u7acb\u66f4\u65b0\u6a21\u5757','\u9700\u8981\u91cd\u65b0\u7f16\u8bd1\u6574\u4e2a\u5185\u6838'],
+  ['GKI \u517c\u5bb9\u6027','\u5b8c\u7f8e\u517c\u5bb9','\u9700\u8981\u9488\u5bf9\u6bcf\u4e2a\u8bbe\u5907\u7f16\u8bd1'],
+  ['\u7a33\u5b9a\u6027','\u6a21\u5757\u5d29\u6e83\u4e0d\u5f71\u54cd\u5185\u6838','bug \u53ef\u80fd\u5f15\u53d1\u5168\u5c40\u5d29\u6e83'],
+  ['\u5b89\u5168\u6027','\u6a21\u5757\u7ea7\u6743\u9650\u9694\u79bb','\u5168\u5c40\u4fee\u6539\u5f71\u54cd\u8303\u56f4\u5927']
+])+
+h2('\u6a21\u5757\u52a0\u8f7d\u6d41\u7a0b')+
+p('KinSU \u5185\u6838\u6a21\u5757\u7684\u52a0\u8f7d\u6d41\u7a0b\u5982\u4e0b\uff1a')+
+pre('\u5185\u6838\u542f\u52a8\n    \u2193\ninit \u8fdb\u7a0b\u542f\u52a8\n    \u2193\n\u68c0\u6d4b KinSU \u5185\u6838\u6a21\u5757\n    \u2193\ninsmod kinsu.ko  \u2190 \u52a0\u8f7d\u5185\u6838\u6a21\u5757\n    \u2193\nhook \u7cfb\u7edf\u8c03\u7528  \u2190 \u5b89\u88c5 hook \u70b9\n    \u2193\n\u521d\u59cb\u5316\u5b8c\u6210  \u2190 \u7b49\u5f85\u7528\u6237\u7a7a\u95f4\u901a\u4fe1')+
+callout('info','\u2139\ufe0f KinSU \u7684 LKM \u6a21\u5f0f\u662f\u5176\u4e0e KernelSU \u7684\u6838\u5fc3\u533a\u522b\u4e4b\u4e00\u3002\u867d\u7136\u4e24\u8005\u90fd\u57fa\u4e8e\u5185\u6838\u7ea7 Root\uff0c\u4f46 KinSU \u5728 LKM \u52a0\u8f7d\u3001\u5b89\u5168\u4fee\u590d\u548c\u6a21\u5757\u7cfb\u7edf\u65b9\u9762\u8fdb\u884c\u4e86\u5927\u91cf\u6539\u8fdb\u3002');
+}};
+
+D['gki-adapt']={title:'GKI \u8bbe\u5907\u9002\u914d',cat:'\u6838\u5fc3\u529f\u80fd',updated:'2024-12-15',html:function(){
+return h2('\u4ec0\u4e48\u662f GKI')+
+p('GKI\uff08Generic Kernel Image\uff09\u662f Google \u4ece Android 11 \u5f00\u59cb\u63a8\u884c\u7684\u901a\u7528\u5185\u6838\u955c\u50cf\u6807\u51c6\u3002\u5b83\u5c06\u5185\u6838\u4e0e\u786c\u4ef6\u9a71\u52a8\u5206\u79bb\uff0c\u4f7f\u5f97\u540c\u4e00\u5185\u6838\u7248\u672c\u7684\u955c\u50cf\u53ef\u4ee5\u5728\u4e0d\u540c\u5382\u5546\u7684\u8bbe\u5907\u4e0a\u4f7f\u7528\u3002')+
+h2('GKI \u8bbe\u5907\u68c0\u6d4b')+
+p('\u4f60\u53ef\u4ee5\u901a\u8fc7\u4ee5\u4e0b\u65b9\u5f0f\u5224\u65ad\u4f60\u7684\u8bbe\u5907\u662f\u5426\u4e3a GKI \u8bbe\u5907\uff1a')+
+pre('# \u65b9\u6cd5 1\uff1a\u68c0\u67e5 Android \u7248\u672c\nadb shell getprop ro.build.version.release\n# Android 12 \u53ca\u4ee5\u4e0a\u7248\u672c\u901a\u5e38\u4e3a GKI \u8bbe\u5907\n\n# \u65b9\u6cd5 2\uff1a\u68c0\u67e5\u5185\u6838\u7248\u672c\nadb shell uname -r\n# \u5185\u6838\u7248\u672c 5.10+ \u901a\u5e38\u4e3a GKI\n\n# \u65b9\u6cd5 3\uff1a\u68c0\u67e5 init_boot \u5206\u533a\u662f\u5426\u5b58\u5728\nadb shell ls -la /dev/block/by-name/init_boot')+
+h2('init_boot \u5206\u533a')+
+p('GKI \u8bbe\u5907\u5f15\u5165\u4e86 init_boot \u5206\u533a\uff0c\u5b83\u5305\u542b\u4e86\u901a\u7528\u5185\u6838\u955c\u50cf\u548c init ramdisk\u3002\u8fd9\u662f KinSU \u5237\u5165\u7684\u76ee\u6807\u5206\u533a\u3002')+
+table(['\u5206\u533a\u540d\u79f0','GKI \u8bbe\u5907','\u975e GKI \u8bbe\u5907'],[
+  ['\u5185\u6838\u955c\u50cf\u4f4d\u7f6e','init_boot','boot'],
+  ['\u5185\u6838\u7248\u672c\u683c\u5f0f','5.10.x / 5.15.x / 6.1.x','\u56e0\u8bbe\u5907\u800c\u5f02'],
+  ['\u662f\u5426\u9700\u8981\u81ea\u884c\u7f16\u8bd1','\u5426\uff0c\u4f7f\u7528\u9884\u7f16\u8bd1\u955c\u50cf','\u662f\uff0c\u9700\u8981\u81ea\u884c\u7f16\u8bd1'],
+  ['OTA \u517c\u5bb9\u6027','\u826f\u597d','\u53d6\u51b3\u4e8e\u8bbe\u5907']
+])+
+h2('OTA \u5206\u533a\u5207\u6362')+
+p('Android \u4f7f\u7528 A/B \u5206\u533a\u673a\u5236\u8fdb\u884c OTA \u66f4\u65b0\u3002\u5f53\u524d\u6d3b\u52a8\u5206\u533a\u548c\u5907\u7528\u5206\u533a\u4f1a\u4ea4\u66ff\u4f7f\u7528\uff1a')+
+pre('# \u67e5\u770b\u5f53\u524d\u6d3b\u52a8\u5206\u533a\nadb shell getprop ro.boot.slot_suffix\n# \u8f93\u51fa _a \u6216 _b\n\n# \u5237\u5165\u65f6\u9700\u8981\u6307\u5b9a\u6b63\u786e\u7684\u5206\u533a\nfastboot flash init_boot_a kinsu.img  # \u5982\u679c\u5f53\u524d\u662f slot_a\nfastboot flash init_boot_b kinsu.img  # \u5982\u679c\u5f53\u524d\u662f slot_b')+
+callout('warning','\u26a0\ufe0f OTA \u66f4\u65b0\u540e\uff0c\u5907\u7528\u5206\u533a\u4f1a\u88ab\u5199\u5165\u65b0\u7684\u539f\u59cb\u5185\u6838\u3002\u5f53\u8bbe\u5907\u5207\u6362\u5230\u8be5\u5206\u533a\u65f6\uff0cKinSU \u5c06\u4e0d\u518d\u751f\u6548\u3002\u8bf7\u5728 OTA \u540e\u91cd\u65b0\u5237\u5165\u5185\u6838\u3002');
+}};
+
+D['superuser']={title:'\u8d85\u7ea7\u7528\u6237\u7ba1\u7406',cat:'\u6838\u5fc3\u529f\u80fd',updated:'2024-12-15',html:function(){
+return h2('\u5e94\u7528\u914d\u7f6e\u6587\u4ef6\u7cfb\u7edf')+
+p('KinSU \u63d0\u4f9b\u4e86\u7cbe\u7ec6\u7684\u5e94\u7528\u914d\u7f6e\u6587\u4ef6\u7cfb\u7edf\uff0c\u5141\u8bb8\u4f60\u4e3a\u6bcf\u4e2a\u5e94\u7528\u5355\u72ec\u914d\u7f6e Root \u6743\u9650\u3002\u8fd9\u610f\u5473\u7740\u4f60\u53ef\u4ee5\u7cbe\u786e\u63a7\u5236\u54ea\u4e9b\u5e94\u7528\u53ef\u4ee5\u83b7\u5f97 Root \u6743\u9650\uff0c\u4ee5\u53ca\u5b83\u4eec\u53ef\u4ee5\u6267\u884c\u54ea\u4e9b\u64cd\u4f5c\u3002')+
+h2('\u6743\u9650\u6a21\u677f')+
+p('KinSU \u63d0\u4f9b\u4e86\u4e09\u79cd\u9884\u8bbe\u7684\u6743\u9650\u6a21\u677f\uff1a')+
+table(['\u6a21\u677f\u540d\u79f0','\u8bf4\u660e','\u9002\u7528\u573a\u666f'],[
+  ['\u9ed8\u8ba4\u6a21\u677f','\u63d0\u4f9b\u57fa\u672c\u7684 su \u547d\u4ee4\u8bbf\u95ee\u6743\u9650','\u5927\u591a\u6570\u5e94\u7528'],
+  ['\u5e94\u7528\u63a5\u5165\u6a21\u677f','\u5141\u8bb8\u5e94\u7528\u901a\u8fc7 Root \u63a5\u5165\u5176\u4ed6\u8fdb\u7a0b','\u9700\u8981\u8fdb\u7a0b\u63a5\u5165\u7684\u5e94\u7528'],
+  ['Shell \u6a21\u677f','\u63d0\u4f9b\u5b8c\u6574\u7684 Shell Root \u6743\u9650','\u7ec8\u7aef\u6a21\u62df\u5668\u3001Shell \u5de5\u5177']
+])+
+h2('\u81ea\u5b9a\u4e49\u914d\u7f6e\u6587\u4ef6')+
+p('\u9664\u4e86\u9884\u8bbe\u6a21\u677f\uff0c\u4f60\u8fd8\u53ef\u4ee5\u521b\u5efa\u81ea\u5b9a\u4e49\u914d\u7f6e\u6587\u4ef6\uff0c\u7cbe\u786e\u63a7\u5236\u5e94\u7528\u7684 Root \u6743\u9650\uff1a')+
+pre('{\n  "id": "com.example.app",\n  "name": "\u793a\u4f8b\u5e94\u7528",\n  "uid": 10086,\n  "profiles": {\n    "root": true,\n    "namespace": "global",\n    "capabilities": ["CAP_NET_ADMIN", "CAP_SYS_PTRACE"],\n    "selinux": "u:r:su:s0",\n    "groups": ["root", "shell"]\n  }\n}')+
+h2('\u6743\u9650\u7ba1\u7406\u5de5\u4f5c\u6d41')+
+p('\u5f53\u5e94\u7528\u8bf7\u6c42 Root \u6743\u9650\u65f6\uff0cKinSU \u7684\u5904\u7406\u6d41\u7a0b\u5982\u4e0b\uff1a')+
+ol(['\u5e94\u7528\u901a\u8fc7 su \u547d\u4ee4\u6216 libsu \u5e93\u8bf7\u6c42 Root \u6743\u9650','KinSU \u5185\u6838\u6a21\u5757\u63a5\u6536\u5230\u8bf7\u6c42\uff0c\u68c0\u67e5\u5e94\u7528\u7684\u914d\u7f6e\u6587\u4ef6','\u6839\u636e\u914d\u7f6e\u6587\u4ef6\u4e2d\u7684\u6a21\u677f\u8bbe\u7f6e\u76f8\u5e94\u7684\u6743\u9650','\u5982\u679c\u5e94\u7528\u672a\u914d\u7f6e\uff0c\u5219\u62d2\u7edd Root \u8bf7\u6c42','\u6743\u9650\u751f\u6548\uff0c\u5e94\u7528\u83b7\u5f97\u5bf9\u5e94\u7684 Root \u8bbf\u95ee\u80fd\u529b'])+
+callout('tip','\ud83d\udca1 \u5efa\u8bae\u4e3a\u6bcf\u4e2a\u9700\u8981 Root \u7684\u5e94\u7528\u5355\u72ec\u914d\u7f6e\u914d\u7f6e\u6587\u4ef6\uff0c\u800c\u4e0d\u662f\u4f7f\u7528\u5168\u5c40\u914d\u7f6e\u3002\u8fd9\u6837\u53ef\u4ee5\u6700\u5c0f\u5316\u5b89\u5168\u98ce\u9669\u3002');
+}};
+
+D['module-system']={title:'\u6a21\u5757\u7cfb\u7edf',cat:'\u6838\u5fc3\u529f\u80fd',updated:'2024-12-15',html:function(){
+return h2('\u6a21\u5757\u7ba1\u7406')+
+p('KinSU \u7684\u6a21\u5757\u7cfb\u7edf\u5141\u8bb8\u4f60\u901a\u8fc7\u5b89\u88c5\u6a21\u5757\u6765\u6269\u5c55\u8bbe\u5907\u529f\u80fd\u3002\u6a21\u5757\u53ef\u4ee5\u4fee\u6539\u7cfb\u7edf\u884c\u4e3a\u3001\u6dfb\u52a0\u529f\u80fd\u6216\u4fee\u6539\u7cfb\u7edf\u6587\u4ef6\uff0c\u800c\u65e0\u9700\u4fee\u6539\u7cfb\u7edf\u5206\u533a\u3002')+
+h2('\u6a21\u5757\u7ed3\u6784')+
+p('\u4e00\u4e2a KinSU \u6a21\u5757\u7684\u6807\u51c6\u7ed3\u6784\u5982\u4e0b\uff1a')+
+pre('module.zip\n\u251c\u2500\u2500 module.prop          # \u6a21\u5757\u5c5e\u6027\u6587\u4ef6\n\u251c\u2500\u2500 post-fs-data.sh      # \u5f00\u673a\u540e\u6267\u884c\u811a\u672c\n\u251c\u2500\u2500 service.sh           # \u670d\u52a1\u811a\u672c\n\u251c\u2500\u2500 uninstall.sh         # \u5378\u8f7d\u811a\u672c\n\u251c\u2500\u2500 system/              # \u7cfb\u7edf\u6587\u4ef6\u4fee\u6539\n\u2502   \u251c\u2500\u2500 app/\n\u2502   \u251c\u2500\u2500 priv-app/\n\u2502   \u2514\u2500\u2500 etc/\n\u251c\u2500\u2500 webroot/             # WebUI \u8d44\u6e90\n\u2502   \u2514\u2500\u2500 index.html\n\u2514\u2500\u2500 META-INF/')+
+h2('WebUI \u652f\u6301')+
+p('KinSU \u6a21\u5757\u652f\u6301 WebUI\uff0c\u5141\u8bb8\u6a21\u5757\u63d0\u4f9b\u53ef\u89c6\u5316\u7684\u7ba1\u7406\u754c\u9762\u3002\u7528\u6237\u53ef\u4ee5\u901a\u8fc7 KinSU Manager \u5185\u7684\u6d4f\u89c8\u5668\u76f4\u63a5\u8bbf\u95ee\u6a21\u5757\u7684 WebUI\u3002')+
+p('WebUI \u7684\u5de5\u4f5c\u539f\u7406\uff1a')+
+ol(['\u6a21\u5757\u5728 webroot/ \u76ee\u5f55\u4e0b\u63d0\u4f9b HTML/CSS/JS \u6587\u4ef6','KinSU Manager \u901a\u8fc7\u5185\u7f6e\u6d4f\u89c8\u5668\u52a0\u8f7d\u6a21\u5757\u7684 WebUI','WebUI \u901a\u8fc7 JavaScript \u63a5\u53e3\u4e0e\u6a21\u5757\u7684\u540e\u53f0\u670d\u52a1\u901a\u4fe1','\u7528\u6237\u53ef\u4ee5\u5728\u56fe\u5f62\u754c\u9762\u4e2d\u914d\u7f6e\u6a21\u5757\u53c2\u6570'])+
+h2('\u6a21\u5757\u4ed3\u5e93')+
+p('KinSU \u652f\u6301\u5728\u7ebf\u6a21\u5757\u4ed3\u5e93\uff0c\u4f60\u53ef\u4ee5\u5728 Manager \u4e2d\u76f4\u63a5\u6d4f\u89c8\u548c\u5b89\u88c5\u6a21\u5757\u3002\u6a21\u5757\u4ed3\u5e93\u5730\u5740\u53ef\u4ee5\u5728\u8bbe\u7f6e\u4e2d\u81ea\u5b9a\u4e49\u3002')+
+callout('info','\u2139\ufe0f \u8bf7\u4ec5\u4ece\u53ef\u4fe1\u4efb\u7684\u6765\u6e90\u5b89\u88c5\u6a21\u5757\u3002\u6076\u610f\u6a21\u5757\u53ef\u80fd\u4f1a\u5bfc\u81f4\u7cfb\u7edf\u4e0d\u7a33\u5b9a\u6216\u6570\u636e\u6cc4\u9732\u3002');
+}};
+
+D['susfs']={title:'SuSFS \u9690\u8eab\u672f',cat:'\u9ad8\u7ea7\u529f\u80fd',updated:'2024-12-15',html:function(){
+return h2('\u4ec0\u4e48\u662f SuSFS')+
+p('SuSFS\uff08SUS Filesystem\uff09\u662f KinSU \u7684\u4e00\u9879\u6838\u5fc3\u9690\u8eab\u529f\u80fd\uff0c\u80fd\u591f\u5728\u5185\u6838\u7ea7\u9690\u85cf Root \u75d5\u8ff9\uff0c\u4f7f\u5e94\u7528\u65e0\u6cd5\u68c0\u6d4b\u5230\u8bbe\u5907\u5df2\u88ab Root\u3002\u8fd9\u5bf9\u4e8e\u901a\u8fc7\u94f6\u884c\u5e94\u7528\u3001\u6e38\u620f\u53cd\u4f5c\u5f0a\u7b49\u573a\u666f\u975e\u5e38\u91cd\u8981\u3002')+
+h2('\u9690\u85cf\u5185\u6838\u6a21\u5757')+
+p('SuSFS \u53ef\u4ee5\u9690\u85cf KinSU \u81ea\u8eab\u7684\u5185\u6838\u6a21\u5757\uff0c\u4f7f\u5176\u4e0d\u51fa\u73b0\u5728 /proc/modules \u548c lsmod \u7684\u8f93\u51fa\u4e2d\uff1a')+
+pre('# \u5f00\u542f\u5185\u6838\u6a21\u5757\u9690\u85cf\n# \u5728 KinSU Manager \u8bbe\u7f6e\u4e2d\u5f00\u542f SuSFS\n# \u6216\u901a\u8fc7\u547d\u4ee4\u884c\uff1a\nkinsu susfs --enable-module-hide\n\n# \u9a8c\u8bc1\u9690\u85cf\u6548\u679c\nadb shell cat /proc/modules | grep kinsu\n# \u5e94\u8be5\u65e0\u8f93\u51fa')+
+h2('\u9690\u85cf\u7528\u6237\u7a7a\u95f4\u6a21\u5757')+
+p('SuSFS \u8fd8\u53ef\u4ee5\u9690\u85cf\u7528\u6237\u7a7a\u95f4\u7684\u6a21\u5757\u6587\u4ef6\uff0c\u5305\u62ec\uff1a')+
+ul(['/data/adb/modules/ \u76ee\u5f55\u4e0b\u7684\u6a21\u5757\u6587\u4ef6','KinSU Manager \u5e94\u7528\u672c\u8eab','su \u4e8c\u8fdb\u5236\u6587\u4ef6','\u76f8\u5173\u7684\u73af\u5883\u53d8\u91cf\u548c\u5c5e\u6027'])+
+pre('# \u5f00\u542f\u7528\u6237\u7a7a\u95f4\u6a21\u5757\u9690\u85cf\nkinsu susfs --enable-userspace-hide\n\n# \u6dfb\u52a0\u9700\u8981\u9690\u85cf\u7684\u6302\u8f7d\u70b9\nkinsu susfs --add-mount-hide /data/adb/modules\nkinsu susfs --add-mount-hide /data/adb/kinsu')+
+h2('\u914d\u7f6e SuSFS')+
+p('\u4f60\u53ef\u4ee5\u5728 KinSU Manager \u7684\u8bbe\u7f6e\u9875\u9762\u4e2d\u914d\u7f6e SuSFS\uff0c\u4e5f\u53ef\u4ee5\u901a\u8fc7\u914d\u7f6e\u6587\u4ef6\u8fdb\u884c\u66f4\u7ec6\u7c92\u5ea6\u7684\u63a7\u5236\uff1a')+
+pre('# SuSFS \u914d\u7f6e\u6587\u4ef6\u793a\u4f8b\n# /data/adb/kinsu/susfs.conf\n\n# \u542f\u7528\u5185\u6838\u6a21\u5757\u9690\u85cf\nenable_module_hide=1\n\n# \u542f\u7528\u7528\u6237\u7a7a\u95f4\u9690\u85cf\nenable_userspace_hide=1\n\n# \u542f\u7528\u6302\u8f7d\u70b9\u9690\u85cf\nenable_mount_hide=1\n\n# \u9690\u85cf\u7684\u6302\u8f7d\u70b9\u5217\u8868\nhide_mounts=/data/adb/modules\nhide_mounts=/data/adb/kinsu')+
+callout('warning','\u26a0\ufe0f SuSFS \u4e0d\u80fd\u4fdd\u8bc1 100% \u7684\u9690\u8eab\u6548\u679c\u3002\u67d0\u4e9b\u9ad8\u7ea7\u68c0\u6d4b\u65b9\u6cd5\u53ef\u80fd\u4ecd\u7136\u80fd\u591f\u68c0\u6d4b\u5230 Root \u75d5\u8ff9\u3002\u8bf7\u4e0d\u8981\u5b8c\u5168\u4f9d\u8d56 SuSFS \u6765\u7ed5\u8fc7\u5b89\u5168\u68c0\u6d4b\u3002');
+}};
+
+D['kpm']={title:'KPM \u5185\u6838\u8865\u4e01',cat:'\u9ad8\u7ea7\u529f\u80fd',updated:'2024-12-15',html:function(){
+return h2('\u4ec0\u4e48\u662f KPM')+
+p('KPM\uff08Kernel Patch Module\uff0c\u5185\u6838\u8865\u4e01\u6a21\u5757\uff09\u662f KinSU \u7684\u4e00\u9879\u9ad8\u7ea7\u529f\u80fd\uff0c\u5141\u8bb8\u5728\u5185\u6838\u8fd0\u884c\u65f6\u52a8\u6001\u5e94\u7528\u8865\u4e01\uff0c\u800c\u65e0\u9700\u4fee\u6539\u5185\u6838\u6e90\u7801\u6216\u91cd\u65b0\u7f16\u8bd1\u5185\u6838\u3002')+
+h2('KPM \u7684\u5de5\u4f5c\u539f\u7406')+
+p('KPM \u901a\u8fc7\u4ee5\u4e0b\u65b9\u5f0f\u5b9e\u73b0\u5185\u6838\u8865\u4e01\uff1a')+
+ol(['\u4f7f\u7528 ftrace \u6216 kprobe \u673a\u5236\u62e6\u622a\u5185\u6838\u51fd\u6570','\u5728\u5185\u6838\u8fd0\u884c\u65f6\u4fee\u6539\u51fd\u6570\u884c\u4e3a','\u652f\u6301\u52a8\u6001\u6dfb\u52a0\u548c\u79fb\u9664\u8865\u4e01','\u63d0\u4f9b\u5b89\u5168\u7684\u8865\u4e01\u52a0\u8f7d\u548c\u5378\u8f7d\u673a\u5236'])+
+h2('\u4f7f\u7528 KPM')+
+p('\u4f60\u53ef\u4ee5\u901a\u8fc7 KinSU Manager \u6216\u547d\u4ee4\u884c\u7ba1\u7406 KPM \u8865\u4e01\uff1a')+
+pre('# \u5217\u51fa\u53ef\u7528\u7684 KPM \u8865\u4e01\nkinsu kpm list\n\n# \u52a0\u8f7d\u6307\u5b9a\u7684 KPM \u8865\u4e01\nkinsu kpm load <patch_name>\n\n# \u5378\u8f7d\u6307\u5b9a\u7684 KPM \u8865\u4e01\nkinsu kpm unload <patch_name>\n\n# \u67e5\u770b\u5df2\u52a0\u8f7d\u7684\u8865\u4e01\nkinsu kpm status')+
+h2('\u5e38\u7528 KPM \u8865\u4e01')+
+table(['\u8865\u4e01\u540d\u79f0','\u529f\u80fd\u8bf4\u660e','\u72b6\u6001'],[
+  ['susfs','SuSFS \u9690\u8eab\u529f\u80fd\u6838\u5fc3\u8865\u4e01','\u7a33\u5b9a'],
+  ['selinux','SELinux \u7b56\u7565\u4fee\u6539\u8865\u4e01','\u7a33\u5b9a'],
+  ['mount','\u6302\u8f7d\u70b9\u4fee\u6539\u8865\u4e01','\u5b9e\u9a8c\u6027'],
+  ['process','\u8fdb\u7a0b\u7ba1\u7406\u8865\u4e01','\u5b9e\u9a8c\u6027']
+])+
+callout('info','\u2139\ufe0f KPM \u8865\u4e01\u76f4\u63a5\u5728\u5185\u6838\u7a7a\u95f4\u8fd0\u884c\uff0c\u8bf7\u4ec5\u52a0\u8f7d\u6765\u81ea\u53ef\u4fe1\u6765\u6e90\u7684\u8865\u4e01\u3002\u9519\u8bef\u7684\u8865\u4e01\u53ef\u80fd\u5bfc\u81f4\u7cfb\u7edf\u5d29\u6e83\u3002');
+}};
+
+D['theme']={title:'\u4e3b\u9898\u5e7b\u5316\u672f',cat:'\u9ad8\u7ea7\u529f\u80fd',updated:'2024-12-15',html:function(){
+return h2('\u52a8\u6001\u53d6\u8272\u4e3b\u9898\u5f15\u64ce')+
+p('KinSU \u5185\u7f6e\u4e86\u5f3a\u5927\u7684\u52a8\u6001\u53d6\u8272\u4e3b\u9898\u5f15\u64ce\uff0c\u80fd\u591f\u6839\u636e\u4f60\u7684\u58c1\u7eb8\u989c\u8272\u81ea\u52a8\u751f\u6210\u5339\u914d\u7684\u4e3b\u9898\u914d\u8272\u65b9\u6848\u3002\u8fd9\u610f\u5473\u7740 KinSU Manager \u7684\u754c\u9762\u98ce\u683c\u4f1a\u968f\u7740\u4f60\u7684\u58c1\u7eb8\u53d8\u5316\u800c\u81ea\u52a8\u8c03\u6574\u3002')+
+h2('\u8272\u5f69\u914d\u8272\u65b9\u6848')+
+p('\u4e3b\u9898\u5f15\u64ce\u652f\u6301\u591a\u79cd\u914d\u8272\u65b9\u6848\uff1a')+
+ul(['\u81ea\u52a8\u6a21\u5f0f\uff1a\u6839\u636e\u58c1\u7eb8\u4e3b\u8272\u8c03\u81ea\u52a8\u751f\u6210\u914d\u8272','\u6d45\u8272\u6a21\u5f0f\uff1a\u4f7f\u7528\u58c1\u7eb8\u7684\u6d45\u8272\u8c03\u4f5c\u4e3a\u4e3b\u8272','\u6df1\u8272\u6a21\u5f0f\uff1a\u4f7f\u7528\u58c1\u7eb8\u7684\u6df1\u8272\u8c03\u4f5c\u4e3a\u4e3b\u8272','\u81ea\u5b9a\u4e49\u6a21\u5f0f\uff1a\u624b\u52a8\u9009\u62e9\u4e3b\u9898\u8272'])+
+h2('iPhone \u98ce\u683c\u5b57\u4f53\u5e7b\u5316')+
+p('KinSU \u652f\u6301 iPhone \u98ce\u683c\u7684\u5b57\u4f53\u5e7b\u5316\u529f\u80fd\uff0c\u53ef\u4ee5\u5c06\u7cfb\u7edf\u5b57\u4f53\u66ff\u6362\u4e3a\u7c7b\u4f3c iOS \u7684\u5b57\u4f53\u98ce\u683c\uff1a')+
+pre('# \u5f00\u542f iPhone \u98ce\u683c\u5b57\u4f53\n# \u5728 KinSU Manager \u8bbe\u7f6e > \u4e3b\u9898 \u4e2d\u5f00\u542f\n# \u6216\u901a\u8fc7\u547d\u4ee4\u884c\uff1a\nkinsu theme --font-mode iphone\n\n# \u6062\u590d\u9ed8\u8ba4\u5b57\u4f53\nkinsu theme --font-mode default')+
+p('\u5b57\u4f53\u5e7b\u5316\u529f\u80fd\u901a\u8fc7\u6a21\u5757\u7cfb\u7edf\u5b9e\u73b0\uff0c\u5b83\u4f1a\u5728\u7cfb\u7edf\u5c42\u9762\u66ff\u6362\u5b57\u4f53\u6587\u4ef6\uff0c\u4f7f\u5f97\u6240\u6709\u5e94\u7528\u7684\u5b57\u4f53\u663e\u793a\u90fd\u4f1a\u53d1\u751f\u53d8\u5316\u3002')+
+h2('\u81ea\u5b9a\u4e49\u4e3b\u9898')+
+p('\u4f60\u53ef\u4ee5\u901a\u8fc7\u914d\u7f6e\u6587\u4ef6\u521b\u5efa\u81ea\u5b9a\u4e49\u4e3b\u9898\uff1a')+
+pre('{\n  "primary_color": "#3370ff",\n  "accent_color": "#ff6b6b",\n  "background_mode": "auto",\n  "font_mode": "iphone",\n  "corner_radius": 16,\n  "animation_speed": 1.0\n}')+
+callout('tip','\ud83d\udca1 \u4e3b\u9898\u66f4\u6539\u4f1a\u5728\u91cd\u65b0\u6253\u5f00 KinSU Manager \u540e\u751f\u6548\u3002\u67d0\u4e9b\u5e94\u7528\u53ef\u80fd\u9700\u8981\u91cd\u542f\u624d\u80fd\u770b\u5230\u5b57\u4f53\u53d8\u5316\u3002');
+}};
+
+D['security-fixes']={title:'\u5b89\u5168\u4fee\u590d\u6e05\u5355',cat:'\u5b89\u5168\u52a0\u56fa',updated:'2024-12-15',html:function(){
+return h2('\u5b89\u5168\u4fee\u590d\u6982\u8ff0')+
+p('KinSU \u5728 KernelSU \u7684\u57fa\u7840\u4e0a\u8fdb\u884c\u4e86\u5927\u91cf\u7684\u5b89\u5168\u4fee\u590d\u548c\u52a0\u56fa\uff0c\u5171\u8ba1\u4fee\u590d\u4e86 21+ \u4e2a\u5b89\u5168\u95ee\u9898\u3002\u8fd9\u4e9b\u4fee\u590d\u6db5\u76d6\u4e86\u547d\u4ee4\u6ce8\u5165\u3001\u8def\u5f84\u7a7f\u8d8a\u3001\u6743\u9650\u63d0\u5347\u3001SELinux \u7b49\u591a\u4e2a\u65b9\u9762\u3002')+
+h2('\u4fee\u590d\u5217\u8868')+
+table(['\u7f16\u53f7','\u4fee\u590d\u5185\u5bb9','\u4e25\u91cd\u7a0b\u5ea6','\u72b6\u6001'],[
+  ['#1','\u4fee\u590d su \u547d\u4ee4\u6ce8\u5165\u6f0f\u6d1e','\u4e25\u91cd','\u5df2\u4fee\u590d'],
+  ['#2','\u4fee\u590d\u6a21\u5757\u5b89\u88c5\u8def\u5f84\u7a7f\u8d8a\u6f0f\u6d1e','\u4e25\u91cd','\u5df2\u4fee\u590d'],
+  ['#3','\u52a0\u56fa su \u6743\u9650\u68c0\u67e5\u673a\u5236','\u9ad8','\u5df2\u4fee\u590d'],
+  ['#4','\u4fee\u590d SELinux \u7b56\u7565\u7ed5\u8fc7\u6f0f\u6d1e','\u9ad8','\u5df2\u4fee\u590d'],
+  ['#5','\u52a0\u56fa\u6a21\u5757\u52a0\u8f7d\u5b89\u5168\u68c0\u67e5','\u9ad8','\u5df2\u4fee\u590d'],
+  ['#6','\u4fee\u590d\u73af\u5883\u53d8\u91cf\u6ce8\u5165\u6f0f\u6d1e','\u4e2d','\u5df2\u4fee\u590d'],
+  ['#7','\u4fee\u590d\u7ade\u6001\u6761\u4ef6\u6f0f\u6d1e','\u4e2d','\u5df2\u4fee\u590d'],
+  ['#8','\u52a0\u56fa ioctl \u63a5\u53e3\u5b89\u5168\u68c0\u67e5','\u4e2d','\u5df2\u4fee\u590d'],
+  ['#9','\u4fee\u590d\u5185\u5b58\u6cc4\u6f0f\u95ee\u9898','\u4e2d','\u5df2\u4fee\u590d'],
+  ['#10','\u52a0\u56fa\u6587\u4ef6\u63cf\u8ff0\u7b26\u5b89\u5168','\u4e2d','\u5df2\u4fee\u590d'],
+  ['#11','\u4fee\u590d\u7b26\u53f7\u94fe\u63a5\u653b\u51fb\u9632\u62a4','\u4e2d','\u5df2\u4fee\u590d'],
+  ['#12','\u52a0\u56fa\u5185\u6838\u6a21\u5757\u53c2\u6570\u68c0\u67e5','\u4f4e','\u5df2\u4fee\u590d'],
+  ['#13','\u4fee\u590d\u65e5\u5fd7\u4fe1\u606f\u6cc4\u9732\u95ee\u9898','\u4f4e','\u5df2\u4fee\u590d'],
+  ['#14','\u52a0\u56fa\u914d\u7f6e\u6587\u4ef6\u89e3\u6790\u5b89\u5168','\u4f4e','\u5df2\u4fee\u590d'],
+  ['#15','\u4fee\u590d\u8fdb\u7a0b\u4fe1\u53f7\u5904\u7406\u7ade\u6001','\u4f4e','\u5df2\u4fee\u590d'],
+  ['#16','\u52a0\u56fa mount \u547d\u540d\u7a7a\u95f4\u9694\u79bb','\u4f4e','\u5df2\u4fee\u590d'],
+  ['#17','\u4fee\u590d\u5185\u6838\u6a21\u5757\u7248\u672c\u68c0\u67e5\u7ed5\u8fc7','\u4f4e','\u5df2\u4fee\u590d'],
+  ['#18','\u52a0\u56fa WebUI \u8bf7\u6c42\u9a8c\u8bc1','\u4f4e','\u5df2\u4fee\u590d'],
+  ['#19','\u4fee\u590d\u5e94\u7528\u914d\u7f6e\u6587\u4ef6\u6743\u9650\u63d0\u5347','\u4f4e','\u5df2\u4fee\u590d'],
+  ['#20','\u52a0\u56fa\u6a21\u5757\u5378\u8f7d\u6e05\u7406\u673a\u5236','\u4f4e','\u5df2\u4fee\u590d'],
+  ['#21','\u4fee\u590d OTA \u66f4\u65b0\u540e\u7684\u72b6\u6001\u6062\u590d\u95ee\u9898','\u4f4e','\u5df2\u4fee\u590d']
+])+
+callout('info','\u2139\ufe0f KinSU \u56e2\u961f\u6301\u7eed\u5173\u6ce8\u5b89\u5168\u95ee\u9898\uff0c\u5982\u679c\u4f60\u53d1\u73b0\u4e86\u5b89\u5168\u6f0f\u6d1e\uff0c\u8bf7\u901a\u8fc7 GitHub Issues \u6216\u79c1\u5bc6\u6e20\u9053\u62a5\u544a\u3002');
+}};
+
+D['cmd-injection']={title:'\u547d\u4ee4\u6ce8\u5165\u9632\u62a4',cat:'\u5b89\u5168\u52a0\u56fa',updated:'2024-12-15',html:function(){
+return h2('\u547d\u4ee4\u6ce8\u5165\u6f0f\u6d1e\u8bf4\u660e')+
+p('\u547d\u4ee4\u6ce8\u5165\u662f\u4e00\u79cd\u5e38\u89c1\u7684\u5b89\u5168\u6f0f\u6d1e\uff0c\u653b\u51fb\u8005\u901a\u8fc7\u5728\u8f93\u5165\u4e2d\u63d2\u5165\u6076\u610f\u547d\u4ee4\uff0c\u4ece\u800c\u5728\u76ee\u6807\u7cfb\u7edf\u4e0a\u6267\u884c\u672a\u6388\u6743\u7684\u64cd\u4f5c\u3002\u5728 Root \u5de5\u5177\u7684\u573a\u666f\u4e0b\uff0c\u547d\u4ee4\u6ce8\u5165\u7684\u5371\u5bb3\u5c24\u4e3a\u4e25\u91cd\uff0c\u56e0\u4e3a\u5b83\u53ef\u80fd\u5bfc\u81f4\u653b\u51fb\u8005\u83b7\u5f97 Root \u7ea7\u522b\u7684\u4efb\u610f\u4ee3\u7801\u6267\u884c\u80fd\u529b\u3002')+
+h2('KinSU \u7684\u9632\u62a4\u63aa\u65bd')+
+p('KinSU \u91c7\u53d6\u4e86\u591a\u5c42\u9632\u62a4\u6765\u9632\u6b62\u547d\u4ee4\u6ce8\u5165\u653b\u51fb\uff1a')+
+h3('1. \u53c2\u6570\u6d88\u6bd2')+
+p('\u6240\u6709\u4ece\u7528\u6237\u7a7a\u95f4\u63a5\u6536\u7684\u53c2\u6570\u90fd\u4f1a\u7ecf\u8fc7\u4e25\u683c\u7684\u8f93\u5165\u9a8c\u8bc1\u548c\u6d88\u6bd2\u5904\u7406\uff1a')+
+pre('// \u53c2\u6570\u6d88\u6bd2\u793a\u4f8b\nstatic int sanitize_command(const char *input) {\n    const char *dangerous = ";|&$`\\n\\"\\'";\n    for (int i = 0; input[i]; i++) {\n        for (int j = 0; dangerous[j]; j++) {\n            if (input[i] == dangerous[j])\n                return -EINVAL;\n        }\n    }\n    return 0;\n}')+
+h3('2. \u767d\u540d\u5355\u547d\u4ee4\u673a\u5236')+
+p('KinSU \u4ec5\u5141\u8bb8\u6267\u884c\u9884\u5b9a\u4e49\u7684\u5b89\u5168\u547d\u4ee4\uff0c\u4e0d\u5141\u8bb8\u4efb\u610f\u547d\u4ee4\u6267\u884c\uff1a')+
+pre('// \u767d\u540d\u5355\u547d\u4ee4\u5217\u8868\nstatic const char *allowed_commands[] = {\n    "su", "mount", "umount",\n    "setenforce", "getenforce", NULL\n};\n\nstatic int is_command_allowed(const char *cmd) {\n    for (int i = 0; allowed_commands[i]; i++)\n        if (strcmp(cmd, allowed_commands[i]) == 0) return 1;\n    return 0;\n}')+
+h3('3. \u76f4\u63a5\u7cfb\u7edf\u8c03\u7528')+
+p('\u5bf9\u4e8e\u9700\u8981\u6267\u884c\u7684\u64cd\u4f5c\uff0cKinSU \u4f18\u5148\u4f7f\u7528\u5185\u6838\u7cfb\u7edf\u8c03\u7528\u800c\u975e\u6267\u884c\u5916\u90e8\u547d\u4ee4\uff0c\u4ece\u6839\u672c\u4e0a\u907f\u514d\u4e86\u547d\u4ee4\u6ce8\u5165\u7684\u53ef\u80fd\u6027\u3002')+
+callout('tip','\ud83d\udca1 \u5982\u679c\u4f60\u5728\u5f00\u53d1 KinSU \u6a21\u5757\u65f6\u9700\u8981\u6267\u884c\u547d\u4ee4\uff0c\u8bf7\u59cb\u7ec8\u4f7f\u7528\u53c2\u6570\u5316\u7684\u6267\u884c\u65b9\u5f0f\uff0c\u800c\u4e0d\u662f\u62fc\u63a5\u547d\u4ee4\u5b57\u7b26\u4e32\u3002');
+}};
+
+D['path-traversal']={title:'\u8def\u5f84\u7a7f\u8d8a\u9632\u62a4',cat:'\u5b89\u5168\u52a0\u56fa',updated:'2024-12-15',html:function(){
+return h2('\u8def\u5f84\u7a7f\u8d8a\u6f0f\u6d1e\u8bf4\u660e')+
+p('\u8def\u5f84\u7a7f\u8d8a\uff08Path Traversal\uff09\u662f\u4e00\u79cd\u5229\u7528 ../ \u7b49\u7279\u6b8a\u5b57\u7b26\u8df3\u51fa\u9650\u5236\u76ee\u5f55\u7684\u653b\u51fb\u65b9\u5f0f\u3002\u5728 Root \u5de5\u5177\u4e2d\uff0c\u8fd9\u79cd\u6f0f\u6d1e\u53ef\u80fd\u5bfc\u81f4\u653b\u51fb\u8005\u8bbf\u95ee\u6216\u4fee\u6539\u7cfb\u7edf\u4e2d\u7684\u4efb\u610f\u6587\u4ef6\u3002')+
+h2('KinSU \u7684\u9632\u62a4\u63aa\u65bd')+
+h3('1. \u8def\u5f84\u89c4\u8303\u5316')+
+p('\u6240\u6709\u6587\u4ef6\u8def\u5f84\u5728\u4f7f\u7528\u524d\u90fd\u4f1a\u7ecf\u8fc7\u89c4\u8303\u5316\u5904\u7406\uff0c\u6d88\u9664 ../ \u7b49\u7a7f\u8d8a\u5e8f\u5217\uff1a')+
+pre('// \u8def\u5f84\u89c4\u8303\u5316\u793a\u4f8b\nstatic char *normalize_path(const char *path) {\n    char *resolved = realpath(path, NULL);\n    if (!resolved) return NULL;\n\n    // \u68c0\u67e5\u662f\u5426\u5728\u5141\u8bb8\u7684\u76ee\u5f55\u5185\n    if (strncmp(resolved, ALLOWED_DIR, strlen(ALLOWED_DIR)) != 0) {\n        free(resolved);\n        return NULL;\n    }\n    return resolved;\n}')+
+h3('2. \u6c99\u7bb1\u76ee\u5f55\u9650\u5236')+
+p('\u6a21\u5757\u548c\u811a\u672c\u53ea\u80fd\u8bbf\u95ee\u5176\u6307\u5b9a\u7684\u5de5\u4f5c\u76ee\u5f55\uff0c\u65e0\u6cd5\u8bbf\u95ee\u7cfb\u7edf\u7684\u5176\u4ed6\u4f4d\u7f6e\uff1a')+
+pre('// \u6c99\u7bb1\u76ee\u5f55\u9650\u5236\nstatic const char *allowed_dirs[] = {\n    "/data/adb/modules/",\n    "/data/adb/kinsu/",\n    NULL\n};\n\nstatic int is_path_allowed(const char *path) {\n    char *resolved = realpath(path, NULL);\n    if (!resolved) return 0;\n    for (int i = 0; allowed_dirs[i]; i++) {\n        if (strncmp(resolved, allowed_dirs[i],\n            strlen(allowed_dirs[i])) == 0) {\n            free(resolved);\n            return 1;\n        }\n    }\n    free(resolved);\n    return 0;\n}')+
+h3('3. \u7b26\u53f7\u94fe\u63a5\u68c0\u67e5')+
+p('KinSU \u4f1a\u68c0\u67e5\u7b26\u53f7\u94fe\u63a5\u662f\u5426\u6307\u5411\u5141\u8bb8\u8303\u56f4\u5916\u7684\u6587\u4ef6\uff0c\u9632\u6b62\u901a\u8fc7\u7b26\u53f7\u94fe\u63a5\u7ed5\u8fc7\u8def\u5f84\u68c0\u67e5\uff1a')+
+pre('// \u7b26\u53f7\u94fe\u63a5\u68c0\u67e5\nstatic int check_symlink(const char *path) {\n    struct stat st;\n    if (lstat(path, &st) != 0) return -1;\n    if (S_ISLNK(st.st_mode)) {\n        char target[PATH_MAX];\n        ssize_t len = readlink(path, target, sizeof(target)-1);\n        if (len < 0) return -1;\n        target[len] = 0;\n        return is_path_allowed(target);\n    }\n    return 0;\n}')+
+callout('info','\u2139\ufe0f KinSU \u7684\u8def\u5f84\u7a7f\u8d8a\u9632\u62a4\u91c7\u7528\u591a\u5c42\u9632\u5fa1\u7b56\u7565\uff0c\u5305\u62ec\u8def\u5f84\u89c4\u8303\u5316\u3001\u6c99\u7bb1\u9650\u5236\u548c\u7b26\u53f7\u94fe\u63a5\u68c0\u67e5\uff0c\u786e\u4fdd\u6587\u4ef6\u8bbf\u95ee\u7684\u5b89\u5168\u6027\u3002');
+}};
+
+D['module-dev']={title:'\u6a21\u5757\u5f00\u53d1',cat:'\u5f00\u53d1\u6307\u5357',updated:'2024-12-15',html:function(){
+return h2('\u6a21\u5757\u5f00\u53d1\u5165\u95e8')+
+p('KinSU \u6a21\u5757\u662f\u6269\u5c55 KinSU \u529f\u80fd\u7684\u4e3b\u8981\u65b9\u5f0f\u3002\u672c\u8282\u5c06\u4ecb\u7ecd\u5982\u4f55\u5f00\u53d1\u4e00\u4e2a KinSU \u6a21\u5757\u3002')+
+h2('\u6a21\u5757\u7ed3\u6784')+
+p('\u4e00\u4e2a\u6807\u51c6\u7684 KinSU \u6a21\u5757\u5305\u542b\u4ee5\u4e0b\u6587\u4ef6\uff1a')+
+pre('my-module/\n\u251c\u2500\u2500 module.prop          # \u5fc5\u586b\uff0c\u6a21\u5757\u5c5e\u6027\n\u251c\u2500\u2500 post-fs-data.sh      # \u5f00\u673a\u540e\u6587\u4ef6\u7cfb\u7edf\u6302\u8f7d\u5b8c\u6210\u540e\u6267\u884c\n\u251c\u2500\u2500 service.sh           # \u670d\u52a1\u542f\u52a8\u811a\u672c\uff08post-fs-data \u540e\u6267\u884c\uff09\n\u251c\u2500\u2500 uninstall.sh         # \u5378\u8f7d\u65f6\u6267\u884c\u7684\u811a\u672c\n\u251c\u2500\u2500 system/              # \u7cfb\u7edf\u6587\u4ef6\u4fee\u6539\uff08\u65e0\u7cfb\u7edf\u6302\u8f7d\uff09\n\u251c\u2500\u2500 webroot/             # WebUI \u8d44\u6e90\u76ee\u5f55\n\u2514\u2500\u2500 META-INF/             # \u5b89\u88c5\u4fe1\u606f')+
+h2('module.prop \u683c\u5f0f')+
+p('module.prop \u662f\u6a21\u5757\u7684\u6838\u5fc3\u914d\u7f6e\u6587\u4ef6\uff1a')+
+pre('id=my_module\nname=\u6211\u7684\u6a21\u5757\nversion=v1.0.0\nversionCode=100\nauthor=YourName\ndescription=\u8fd9\u662f\u4e00\u4e2a\u793a\u4f8b\u6a21\u5757')+
+h2('\u811a\u672c\u73af\u5883\u53d8\u91cf')+
+p('\u5728\u811a\u672c\u4e2d\uff0c\u4f60\u53ef\u4ee5\u4f7f\u7528\u4ee5\u4e0b\u73af\u5883\u53d8\u91cf\uff1a')+
+table(['\u53d8\u91cf','\u8bf4\u660e'],[
+  ['MODDIR','\u6a21\u5757\u5b89\u88c5\u76ee\u5f55'],
+  ['MODPATH','\u6a21\u5757\u5b8c\u6574\u8def\u5f84'],
+  ['MODNAME','\u6a21\u5757\u540d\u79f0'],
+  ['KSU','\u662f\u5426\u5728 KinSU \u73af\u5883\u4e0b\u8fd0\u884c'],
+  ['KSU_VER','KinSU \u7248\u672c\u53f7'],
+  ['KSU_VER_CODE','KinSU \u7248\u672c\u4ee3\u7801']
+])+
+h2('\u6253\u5305\u6a21\u5757')+
+p('\u5c06\u6a21\u5757\u6587\u4ef6\u6253\u5305\u4e3a zip \u683c\u5f0f\uff1a')+
+pre('# \u786e\u4fdd\u76ee\u5f55\u7ed3\u6784\u6b63\u786e\ncd my-module\nzip -r ../my-module.zip .\n\n# \u5728 KinSU Manager \u4e2d\u5b89\u88c5\n# \u6216\u901a\u8fc7\u547d\u4ee4\u884c\uff1a\nkinsu module install /path/to/my-module.zip')+
+callout('tip','\ud83d\udca1 \u5efa\u8bae\u5728\u53d1\u5e03\u6a21\u5757\u524d\u5728\u591a\u4e2a\u8bbe\u5907\u4e0a\u6d4b\u8bd5\uff0c\u786e\u4fdd\u517c\u5bb9\u6027\u3002');
+}};
+
+D['webui-dev']={title:'WebUI \u5f00\u53d1',cat:'\u5f00\u53d1\u6307\u5357',updated:'2024-12-15',html:function(){
+return h2('WebUI \u5f00\u53d1\u6982\u8ff0')+
+p('KinSU \u6a21\u5757\u652f\u6301 WebUI\uff0c\u5141\u8bb8\u4f60\u4e3a\u6a21\u5757\u63d0\u4f9b\u53ef\u89c6\u5316\u7684\u7ba1\u7406\u754c\u9762\u3002WebUI \u57fa\u4e8e Web \u6280\u672f\uff0c\u53ef\u4ee5\u5728 KinSU Manager \u5185\u7f6e\u7684\u6d4f\u89c8\u5668\u4e2d\u8fd0\u884c\u3002')+
+h2('WebUI \u76ee\u5f55\u7ed3\u6784')+
+p('\u5c06 WebUI \u6587\u4ef6\u653e\u5728\u6a21\u5757\u7684 webroot/ \u76ee\u5f55\u4e0b\uff1a')+
+pre('my-module/\n\u2514\u2500\u2500 webroot/\n    \u251c\u2500\u2500 index.html      # \u4e3b\u9875\u9762\n    \u251c\u2500\u2500 style.css       # \u6837\u5f0f\n    \u2514\u2500\u2500 script.js       # \u903b\u8f91')+
+h2('JavaScript \u63a5\u53e3')+
+p('WebUI \u53ef\u4ee5\u901a\u8fc7\u4ee5\u4e0b JavaScript \u63a5\u53e3\u4e0e\u6a21\u5757\u540e\u53f0\u901a\u4fe1\uff1a')+
+pre('// \u6267\u884c Shell \u547d\u4ee4\nKinSU.exec(command, (code, stdout, stderr) => {\n    console.log("Exit code:", code);\n    console.log("Output:", stdout);\n});\n\n// \u83b7\u53d6\u6a21\u5757\u914d\u7f6e\nKinSU.getConfig((config) => {\n    console.log("Config:", config);\n});\n\n// \u4fdd\u5b58\u6a21\u5757\u914d\u7f6e\nKinSU.setConfig({ key: "value" }, (success) => {\n    console.log("Saved:", success);\n});')+
+h2('\u5b8c\u6574\u793a\u4f8b')+
+p('\u4ee5\u4e0b\u662f\u4e00\u4e2a\u7b80\u5355\u7684 WebUI \u793a\u4f8b\uff1a')+
+pre('<!-- webroot/index.html -->\n<!DOCTYPE html>\n<html>\n<head>\n    <meta charset="utf-8">\n    <title>\u6211\u7684\u6a21\u5757</title>\n    <style>\n        body { font-family: sans-serif; padding: 20px; }\n        button { padding: 10px 20px; margin: 5px; }\n    </style>\n</head>\n<body>\n    <h1>\u6a21\u5757\u63a7\u5236\u53f0</h1>\n    <button onclick="toggle()">\u5f00\u542f/\u5173\u95ed</button>\n    <div id="status">\u72b6\u6001\uff1a\u672a\u77e5</div>\n    <script>\n        function toggle() {\n            KinSU.exec("toggle_feature", (code, out) => {\n                document.getElementById("status").textContent = out;\n            });\n        }\n    </script>\n</body>\n</html>')+
+callout('info','\u2139\ufe0f WebUI \u8fd0\u884c\u5728 KinSU Manager \u7684\u6c99\u7bb1\u73af\u5883\u4e2d\uff0c\u53ea\u80fd\u901a\u8fc7\u63d0\u4f9b\u7684 JavaScript \u63a5\u53e3\u4e0e\u7cfb\u7edf\u4ea4\u4e92\u3002');
+}};
+
+D['contribute']={title:'\u8d21\u732e\u4ee3\u7801',cat:'\u5f00\u53d1\u6307\u5357',updated:'2024-12-15',html:function(){
+return h2('\u5982\u4f55\u8d21\u732e')+
+p('KinSU \u662f\u4e00\u4e2a\u5f00\u6e90\u9879\u76ee\uff0c\u6211\u4eec\u6b22\u8fce\u4efb\u4f55\u4eba\u53c2\u4e0e\u8d21\u732e\u3002\u65e0\u8bba\u662f\u4fee\u590d bug\u3001\u6dfb\u52a0\u65b0\u529f\u80fd\u3001\u6539\u8fdb\u6587\u6863\u8fd8\u662f\u7ffb\u8bd1\uff0c\u4f60\u7684\u8d21\u732e\u90fd\u5c06\u5e2e\u52a9 KinSU \u53d8\u5f97\u66f4\u597d\u3002')+
+h2('\u5f00\u53d1\u73af\u5883\u51c6\u5907')+
+p('\u5728\u5f00\u59cb\u8d21\u732e\u4e4b\u524d\uff0c\u8bf7\u5148\u51c6\u5907\u597d\u4ee5\u4e0b\u5f00\u53d1\u73af\u5883\uff1a')+
+ul(['Android \u5f00\u53d1\u73af\u5883\uff08Android Studio\uff09','Rust \u5de5\u5177\u94fe\uff08\u7528\u4e8e\u5185\u6838\u6a21\u5757\u5f00\u53d1\uff09','Git \u7248\u672c\u63a7\u5236','\u4e86\u89e3 Linux \u5185\u6838\u5f00\u53d1\u57fa\u7840'])+
+h2('\u8d21\u732e\u6d41\u7a0b')+
+ol(['Fork \u9879\u76ee\u5230\u4f60\u7684 GitHub \u8d26\u6237','\u521b\u5efa\u529f\u80fd\u5206\u652f\uff08feature/xxx \u6216 fix/xxx\uff09','\u7f16\u5199\u4ee3\u7801\u5e76\u786e\u4fdd\u901a\u8fc7\u6240\u6709\u6d4b\u8bd5','\u63d0\u4ea4 Pull Request \u5e76\u586b\u5199 PR \u6a21\u677f','\u7b49\u5f85\u4ee3\u7801\u5ba1\u67e5'])+
+h2('\u4ee3\u7801\u89c4\u8303')+
+p('\u8bf7\u9075\u5faa\u4ee5\u4e0b\u4ee3\u7801\u89c4\u8303\uff1a')+
+ul(['\u4f7f\u7528 rustfmt \u683c\u5f0f\u5316 Rust \u4ee3\u7801','\u4f7f\u7528 clippy \u8fdb\u884c\u4ee3\u7801\u68c0\u67e5','\u7f16\u5199\u6e05\u6670\u7684\u63d0\u4ea4\u4fe1\u606f','\u6dfb\u52a0\u5fc5\u8981\u7684\u6d4b\u8bd5\u7528\u4f8b','\u66f4\u65b0\u76f8\u5173\u6587\u6863'])+
+h2('\u62a5\u544a Bug')+
+p('\u5982\u679c\u4f60\u53d1\u73b0\u4e86 Bug\uff0c\u8bf7\u901a\u8fc7 GitHub Issues \u62a5\u544a\uff1a')+
+pre('# Bug \u62a5\u544a\u6a21\u677f\n## \u73af\u5883\u4fe1\u606f\n- \u8bbe\u5907\u578b\u53f7\uff1a\n- Android \u7248\u672c\uff1a\n- KinSU \u7248\u672c\uff1a\n- \u5185\u6838\u7248\u672c\uff1a\n\n## \u95ee\u9898\u63cf\u8ff0\n\u8be6\u7ec6\u63cf\u8ff0\u9047\u5230\u7684\u95ee\u9898\n\n## \u590d\u73b0\u6b65\u9aa4\n1. ...\n2. ...\n3. ...\n\n## \u671f\u671b\u884c\u4e3a\n\u63cf\u8ff0\u671f\u671b\u7684\u6b63\u786e\u884c\u4e3a')+
+callout('info','\u2139\ufe0f \u5b89\u5168\u76f8\u5173\u7684\u6f0f\u6d1e\u62a5\u544a\uff0c\u8bf7\u901a\u8fc7\u79c1\u5bc6\u6e20\u9053\u8054\u7cfb\u6211\u4eec\uff0c\u4e0d\u8981\u76f4\u63a5\u516c\u5f00\u62a5\u544a\u3002');
+}};
+
+// ====== HTML Helper Functions ======
+function h2(t){return '<h2 id="'+slug(t)+'">'+t+'</h2>';}
+function h3(t){return '<h3 id="'+slug(t)+'">'+t+'</h3>';}
+function p(t){return '<p>'+t+'</p>';}
+function ul(items){return '<ul>'+items.map(function(i){return '<li>'+i+'</li>';}).join('')+'</ul>';}
+function ol(items){return '<ol>'+items.map(function(i){return '<li>'+i+'</li>';}).join('')+'</ol>';}
+function pre(code){return '<pre><code>'+esc(code)+'</code></pre>';}
+function callout(kind,text){
+  var cls=kind==='warning'?'callout-warning':kind==='tip'?'callout-tip':'callout-info';
+  var icon=kind==='warning'?'\u26a0\ufe0f':kind==='tip'?'\ud83d\udca1':'\u2139\ufe0f';
+  return '<div class="callout '+cls+'"><span class="callout-icon">'+icon+'</span><span>'+text+'</span></div>';
+}
+function table(headers,rows){
+  var h='<table><thead><tr>'+headers.map(function(x){return '<th>'+x+'</th>';}).join('')+'</tr></thead><tbody>';
+  rows.forEach(function(r){h+='<tr>'+r.map(function(c){return '<td>'+c+'</td>';}).join('')+'</tr>';});
+  return h+'</tbody></table>';
+}
+function slug(s){return s.replace(/[^\w\u4e00-\u9fff]/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+// ====== App State ======
+var currentPage='install';
+var currentView='home';
+
+// ====== Initialize Landing Page ======
+function initLanding(){
+  document.getElementById('heroTitle').textContent=T.heroTitle;
+  document.getElementById('heroSubtitle').textContent=T.heroSubtitle;
+  document.getElementById('heroDesc').textContent=T.heroDesc;
+  document.getElementById('heroButtons').innerHTML=
+    '<a href="https://github.com/Spring-bulid/KinSU/releases/latest" target="_blank" class="btn-primary">'+T.btnAdventure+'</a>'+
+    '<a href="#" onclick="switchToDocs();return false;" class="btn-secondary">'+T.btnGuide+'</a>';
+  document.getElementById('featuresTitle').textContent=T.featuresTitle;
+  document.getElementById('featuresDesc').textContent=T.featuresDesc;
+  var fg=document.getElementById('featuresGrid');
+  fg.innerHTML=features.map(function(f){
+    return '<div class="feature-card"><div class="feature-icon">'+f.icon+'</div><div class="feature-name">'+f.name+'</div><div class="feature-desc">'+f.desc+'</div></div>';
+  }).join('');
+  document.getElementById('gsTitle').textContent=T.gsTitle;
+  document.getElementById('gsDesc').textContent=T.gsDesc;
+  var sc=document.getElementById('stepsContainer');
+  sc.innerHTML=steps.map(function(s){
+    return '<div class="step"><div class="step-num">'+s.num+'</div><div class="step-title">'+s.title+'</div><div class="step-desc">'+s.desc+'</div></div>';
+  }).join('');
+  document.getElementById('compTitle').textContent=T.compTitle;
+  document.getElementById('compDesc').textContent=T.compDesc;
+  var ct='<table class="comparison-table"><thead><tr><th>\u529f\u80fd</th><th>KinSU</th><th>KernelSU</th><th>Magisk</th></tr></thead><tbody>';
+  compRows.forEach(function(r){
+    ct+='<tr><td>'+r[0]+'</td>';
+    for(var i=1;i<=3;i++){
+      if(r[i]===true) ct+='<td class="check">\u2713</td>';
+      else if(r[i]===false) ct+='<td class="cross">\u2717</td>';
+      else ct+='<td>'+r[i]+'</td>';
+    }
+    ct+='</tr>';
   });
+  ct+='</tbody></table>';
+  document.getElementById('comparisonTable').innerHTML=ct;
+  document.getElementById('contribTitle').textContent=T.contribTitle;
+  document.getElementById('contribDesc').textContent=T.contribDesc;
+  var ag=document.getElementById('avatarGrid');
+  ag.innerHTML=contribIds.map(function(id){
+    return '<img class="avatar" src="https://aka.doubaocdn.com/s/'+id+'" alt="Contributor" loading="lazy">';
+  }).join('');
+  document.getElementById('footer').textContent=T.footer;
+}
+
+// ====== Initialize Docs Sidebar ======
+function initSidebar(){
+  document.getElementById('sidebarTitleText').textContent=T.sidebarTitle;
+  var tree=document.getElementById('sidebarTree');
+  tree.innerHTML=docTree.map(function(section){
+    var expanded=section.children.some(function(c){return c.id===currentPage;});
+    return '<div class="sidebar-section'+(expanded?' expanded':'')+'" data-section="'+section.id+'">'+
+      '<div class="sidebar-section-header" onclick="toggleSection(\''+section.id+'\')">'+
+      '<span>'+section.icon+' '+section.title+'</span>'+
+      '<span class="sidebar-arrow">\u25b6</span>'+
+      '</div>'+
+      '<div class="sidebar-items">'+
+      section.children.map(function(child){
+        return '<div class="sidebar-item'+(child.id===currentPage?' active':'')+'" data-page="'+child.id+'" onclick="navigateTo(\''+child.id+'\')">'+child.title+'</div>';
+      }).join('')+
+      '</div></div>';
+  }).join('');
+}
+
+function toggleSection(id){
+  var el=document.querySelector('[data-section="'+id+'"]');
+  if(el)el.classList.toggle('expanded');
+}
+
+// ====== Navigate to Page ======
+function navigateTo(pageId){
+  currentPage=pageId;
+  var doc=D[pageId];
+  if(!doc)return;
+  // Update sidebar active state
+  document.querySelectorAll('.sidebar-item').forEach(function(el){
+    el.classList.toggle('active',el.getAttribute('data-page')===pageId);
+  });
+  // Expand parent section
+  document.querySelectorAll('.sidebar-section').forEach(function(sec){
+    var sectionId=sec.getAttribute('data-section');
+    var section=docTree.find(function(s){return s.id===sectionId;});
+    if(section&&section.children.some(function(c){return c.id===pageId;})){
+      sec.classList.add('expanded');
+    }
+  });
+  // Render content
+  renderDoc(doc);
+  // Scroll to top
+  document.getElementById('docsMain').scrollTop=0;
+  // Close mobile sidebar
+  document.getElementById('docsSidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('show');
+}
+
+function renderDoc(doc){
+  document.getElementById('breadcrumb').innerHTML=
+    '<a href="#" onclick="switchToHome();return false;">'+T.navHome+'</a><span class="breadcrumb-sep">/</span>'+
+    '<span>'+doc.cat+'</span><span class="breadcrumb-sep">/</span><span>'+doc.title+'</span>';
+  document.getElementById('docTitle').textContent=doc.title;
+  document.getElementById('docMeta').innerHTML=
+    '<span>'+T.updatedLabel+' '+doc.updated+'</span>'+
+    '<span>'+T.readingTime+' 5 '+T.minute+'</span>';
+  document.getElementById('docBody').innerHTML=doc.html();
+  // Build TOC
+  buildTOC();
+}
+
+function buildTOC(){
+  var tocEl=document.getElementById('tocItems');
+  var headings=document.querySelectorAll('#docBody h2, #docBody h3');
+  var html='';
+  headings.forEach(function(h){
+    var cls=h.tagName==='H3'?'toc-item h3':'toc-item';
+    html+='<div class="'+cls+'" onclick="scrollToHeading(\''+h.id+'\')">'+h.textContent+'</div>';
+  });
+  tocEl.innerHTML=html;
+  document.getElementById('tocTitle').textContent=T.tocLabel;
+  // Setup scroll spy
+  setupScrollSpy();
+}
+
+function scrollToHeading(id){
+  var el=document.getElementById(id);
+  if(el){
+    var main=document.getElementById('docsMain');
+    main.scrollTop=el.offsetTop-80;
+  }
+}
+
+var scrollSpyTimer=null;
+function setupScrollSpy(){
+  var main=document.getElementById('docsMain');
+  main.removeEventListener('scroll',onScrollSpy);
+  main.addEventListener('scroll',onScrollSpy);
+}
+
+function onScrollSpy(){
+  clearTimeout(scrollSpyTimer);
+  scrollSpyTimer=setTimeout(function(){
+    var headings=document.querySelectorAll('#docBody h2, #docBody h3');
+    var main=document.getElementById('docsMain');
+    var scrollTop=main.scrollTop+100;
+    var activeId=null;
+    headings.forEach(function(h){
+      if(h.offsetTop<=scrollTop)activeId=h.id;
+    });
+    document.querySelectorAll('.toc-item').forEach(function(t){
+      var text=t.textContent;
+      var isActive=false;
+      headings.forEach(function(h){
+        if(h.id===activeId&&h.textContent===text)isActive=true;
+      });
+      t.classList.toggle('active',isActive);
+    });
+  },50);
+}
+
+// ====== View Switching ======
+function switchToDocs(){
+  currentView='docs';
+  document.getElementById('landing').style.display='none';
+  document.getElementById('docs').style.display='block';
+  document.getElementById('tabHome').classList.remove('active');
+  document.getElementById('tabDocs').classList.add('active');
+  document.getElementById('navbar').classList.add('dark');
+  initSidebar();
+  navigateTo(currentPage);
+}
+
+function switchToHome(){
+  currentView='home';
+  document.getElementById('landing').style.display='block';
+  document.getElementById('docs').style.display='none';
+  document.getElementById('tabHome').classList.add('active');
+  document.getElementById('tabDocs').classList.remove('active');
+  document.getElementById('navbar').classList.remove('dark');
+}
+
+// Make switchToDocs global
+window.switchToDocs=switchToDocs;
+window.switchToHome=switchToHome;
+window.toggleSection=toggleSection;
+window.navigateTo=navigateTo;
+window.scrollToHeading=scrollToHeading;
+
+// ====== Event Listeners ======
+document.getElementById('tabHome').addEventListener('click',switchToHome);
+document.getElementById('tabDocs').addEventListener('click',switchToDocs);
+document.getElementById('navLogo').addEventListener('click',switchToHome);
+
+document.getElementById('tabHome').textContent=T.navHome;
+document.getElementById('tabDocs').textContent=T.navDocs;
+
+// Mobile menu
+document.getElementById('mobileMenuBtn').addEventListener('click',function(){
+  document.getElementById('docsSidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('show');
 });
+document.getElementById('sidebarOverlay').addEventListener('click',function(){
+  document.getElementById('docsSidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('show');
+});
+
+// Navbar scroll effect for landing
+window.addEventListener('scroll',function(){
+  if(currentView==='home'){
+    var nb=document.getElementById('navbar');
+    if(window.scrollY>100)nb.classList.add('dark');
+    else nb.classList.remove('dark');
+  }
+});
+
+// ====== Initialize ======
+initLanding();
+
+})();
 </script>
 </body>
 </html>
