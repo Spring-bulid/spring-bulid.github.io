@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+&#xFEFF;<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
@@ -663,7 +663,7 @@ function table(headers,rows){
   return h+'</tbody></table>';
 }
 function slug(s){return s.replace(/[^\w\u4e00-\u9fff]/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');}
-function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function esc(s){return s.replace(/&/g,'&').replace(/</g,'<').replace(/>/g,'>');}
 
 // ====== App State ======
 var currentPage='install';
