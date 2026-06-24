@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KinSU - 异世界 Root 之旅</title>
+<title>KinSU - 寮備笘鐣?Root 涔嬫梾</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--primary:#7c5cfc;--primary-light:#a78bfa;--accent:#f472b6;--bg-dark:#0f0a1a;--bg-card:rgba(20,14,40,0.85);--text:#e8e0f0;--text-dim:#9b8cb8;--glow:0 0 20px rgba(124,92,252,0.3)}
 body{font-family:'Noto Sans SC',sans-serif;background:var(--bg-dark);color:var(--text);line-height:1.8;overflow-x:hidden}
-.bg-anime{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-2;background-size:cover;background-position:center;transition:opacity 1s}
+.bg-anime{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-2;background-size:cover;background-position:center;background-repeat:no-repeat;transition:opacity 1s;opacity:0.6}
 .bg-overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;background:linear-gradient(180deg,rgba(15,10,26,0.7) 0%,rgba(15,10,26,0.85) 50%,rgba(15,10,26,0.95) 100%)}
 nav{position:fixed;top:0;width:100%;z-index:100;padding:16px 30px;display:flex;justify-content:space-between;align-items:center;background:rgba(15,10,26,0.8);backdrop-filter:blur(12px);border-bottom:1px solid rgba(124,92,252,0.15)}
 nav .logo{font-size:1.4em;font-weight:700;background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
@@ -78,200 +78,200 @@ footer .copy{color:rgba(155,140,184,0.5);font-size:0.85em}
 <nav>
   <div class="logo">KinSU</div>
   <div class="nav-links">
-    <a href="#features">特性</a>
-    <a href="#docs">文档</a>
-    <a href="#guide">指南</a>
-    <a href="#compare">对比</a>
-    <a href="#contributors">贡献者</a>
-    <a href="https://github.com/Spring-bulid/KinSU/releases/latest" class="btn-primary" style="padding:8px 24px;font-size:0.9em">下载</a>
+    <a href="#features">鐗规€?/a>
+    <a href="#docs">鏂囨。</a>
+    <a href="#guide">鎸囧崡</a>
+    <a href="#compare">瀵规瘮</a>
+    <a href="#contributors">璐＄尞鑰?/a>
+    <a href="https://github.com/Spring-bulid/KinSU/releases/latest" class="btn-primary" style="padding:8px 24px;font-size:0.9em">涓嬭浇</a>
   </div>
 </nav>
 
 <div class="hero">
   <h1>KinSU</h1>
-  <p class="subtitle">穿越内核的异世界 Root 冒险记</p>
-  <p class="tagline">—— 以 LKM 为剑，斩断权限的枷锁 ——</p>
-  <a href="https://github.com/Spring-bulid/KinSU/releases/latest" class="btn-primary">开启冒险</a>
-  <a href="#docs" class="btn-secondary">阅读攻略</a>
+  <p class="subtitle">绌胯秺鍐呮牳鐨勫紓涓栫晫 Root 鍐掗櫓璁?/p>
+  <p class="tagline">鈥斺€?浠?LKM 涓哄墤锛屾柀鏂潈闄愮殑鏋烽攣 鈥斺€?/p>
+  <a href="https://github.com/Spring-bulid/KinSU/releases/latest" class="btn-primary">寮€鍚啋闄?/a>
+  <a href="#docs" class="btn-secondary">闃呰鏀荤暐</a>
 </div>
 
 <div class="section" id="features">
-  <h2 class="section-title">冒险者技能树</h2>
-  <p class="section-desc">KinSU 赋予你的每一项能力，都是通往更高阶冒险者的钥匙</p>
+  <h2 class="section-title">鍐掗櫓鑰呮妧鑳芥爲</h2>
+  <p class="section-desc">KinSU 璧嬩簣浣犵殑姣忎竴椤硅兘鍔涳紝閮芥槸閫氬線鏇撮珮闃跺啋闄╄€呯殑閽ュ寵</p>
   <div class="features">
     <div class="feature-card">
       <span class="icon">&#x2694;</span>
-      <h3>LKM 基准模式</h3>
-      <p>以可加载内核模块为冒险的基石，无需重编译内核即可获得 Root 力量，灵活如风，迅捷如电</p>
+      <h3>LKM 鍩哄噯妯″紡</h3>
+      <p>浠ュ彲鍔犺浇鍐呮牳妯″潡涓哄啋闄╃殑鍩虹煶锛屾棤闇€閲嶇紪璇戝唴鏍稿嵆鍙幏寰?Root 鍔涢噺锛岀伒娲诲椋庯紝杩呮嵎濡傜數</p>
     </div>
     <div class="feature-card">
       <span class="icon">&#x1F3F0;</span>
-      <h3>GKI 异世界适配</h3>
-      <p>完美适配 Android GKI 设备的内核级 Root，在 init_boot 的异世界中畅通无阻</p>
+      <h3>GKI 寮備笘鐣岄€傞厤</h3>
+      <p>瀹岀編閫傞厤 Android GKI 璁惧鐨勫唴鏍哥骇 Root锛屽湪 init_boot 鐨勫紓涓栫晫涓晠閫氭棤闃?/p>
     </div>
     <div class="feature-card">
       <span class="icon">&#x1F9E9;</span>
-      <h3>模块魔法书</h3>
-      <p>强大的模块管理系统，支持 WebUI 可视化操作，每一本魔法书都能扩展你的能力边界</p>
+      <h3>妯″潡榄旀硶涔?/h3>
+      <p>寮哄ぇ鐨勬ā鍧楃鐞嗙郴缁燂紝鏀寔 WebUI 鍙鍖栨搷浣滐紝姣忎竴鏈瓟娉曚功閮借兘鎵╁睍浣犵殑鑳藉姏杈圭晫</p>
     </div>
     <div class="feature-card">
       <span class="icon">&#x1F6E1;</span>
-      <h3>超级用户权限</h3>
-      <p>精细的应用配置文件系统，为每一位冒险者量身定制 Root 权限，该给的给，不该给的一律封印</p>
+      <h3>瓒呯骇鐢ㄦ埛鏉冮檺</h3>
+      <p>绮剧粏鐨勫簲鐢ㄩ厤缃枃浠剁郴缁燂紝涓烘瘡涓€浣嶅啋闄╄€呴噺韬畾鍒?Root 鏉冮檺锛岃缁欑殑缁欙紝涓嶈缁欑殑涓€寰嬪皝鍗?/p>
     </div>
     <div class="feature-card">
       <span class="icon">&#x1F3A8;</span>
-      <h3>主题幻化术</h3>
-      <p>动态取色主题引擎，支持 iPhone 风格字体幻化，让你的管理器独一无二，颜值即正义</p>
+      <h3>涓婚骞诲寲鏈?/h3>
+      <p>鍔ㄦ€佸彇鑹蹭富棰樺紩鎿庯紝鏀寔 iPhone 椋庢牸瀛椾綋骞诲寲锛岃浣犵殑绠＄悊鍣ㄧ嫭涓€鏃犱簩锛岄鍊煎嵆姝ｄ箟</p>
     </div>
     <div class="feature-card">
       <span class="icon">&#x1F30D;</span>
-      <h3>多语言结界</h3>
-      <p>跨越语言之壁，支持中文、英语、俄语、日语等多种语言，冒险无国界</p>
+      <h3>澶氳瑷€缁撶晫</h3>
+      <p>璺ㄨ秺璇█涔嬪锛屾敮鎸佷腑鏂囥€佽嫳璇€佷縿璇€佹棩璇瓑澶氱璇█锛屽啋闄╂棤鍥界晫</p>
     </div>
   </div>
 </div>
 
 <div class="section" id="docs">
-  <h2 class="section-title">冒险者攻略书</h2>
-  <p class="section-desc">在这里，你将找到关于 KinSU 一切力量的详细解读</p>
+  <h2 class="section-title">鍐掗櫓鑰呮敾鐣ヤ功</h2>
+  <p class="section-desc">鍦ㄨ繖閲岋紝浣犲皢鎵惧埌鍏充簬 KinSU 涓€鍒囧姏閲忕殑璇︾粏瑙ｈ</p>
   <div class="doc-grid">
     <div class="doc-card">
-      <h3>&#x1F527; LKM 模式详解</h3>
-      <p>LKM（Loadable Kernel Module）是 KinSU 的核心冒险模式。它以可加载内核模块的方式注入系统，无需重新编译内核即可获得 Root 权限。</p>
+      <h3>&#x1F527; LKM 妯″紡璇﹁В</h3>
+      <p>LKM锛圠oadable Kernel Module锛夋槸 KinSU 鐨勬牳蹇冨啋闄╂ā寮忋€傚畠浠ュ彲鍔犺浇鍐呮牳妯″潡鐨勬柟寮忔敞鍏ョ郴缁燂紝鏃犻渶閲嶆柊缂栬瘧鍐呮牳鍗冲彲鑾峰緱 Root 鏉冮檺銆?/p>
       <ul>
-        <li>无需修改内核源码，刷入即用</li>
-        <li>支持动态加载与卸载，灵活切换</li>
-        <li>兼容非 GKI 设备，冒险范围更广</li>
-        <li>与 GKI 模式自动切换，无缝衔接</li>
+        <li>鏃犻渶淇敼鍐呮牳婧愮爜锛屽埛鍏ュ嵆鐢?/li>
+        <li>鏀寔鍔ㄦ€佸姞杞戒笌鍗歌浇锛岀伒娲诲垏鎹?/li>
+        <li>鍏煎闈?GKI 璁惧锛屽啋闄╄寖鍥存洿骞?/li>
+        <li>涓?GKI 妯″紡鑷姩鍒囨崲锛屾棤缂濊鎺?/li>
       </ul>
     </div>
     <div class="doc-card">
-      <h3>&#x1F30D; GKI 设备适配</h3>
-      <p>对于 GKI（Generic Kernel Image）设备，KinSU 通过 <code>init_boot</code> 分区检测自动识别，并提供完整的内核级 Root 支持。</p>
+      <h3>&#x1F30D; GKI 璁惧閫傞厤</h3>
+      <p>瀵逛簬 GKI锛圙eneric Kernel Image锛夎澶囷紝KinSU 閫氳繃 <code>init_boot</code> 鍒嗗尯妫€娴嬭嚜鍔ㄨ瘑鍒紝骞舵彁渚涘畬鏁寸殑鍐呮牳绾?Root 鏀寔銆?/p>
       <ul>
-        <li>自动检测 <code>/dev/block/by-name/init_boot</code> 分区</li>
-        <li>刷入第三方内核后仍可正确识别 GKI 设备</li>
-        <li>OTA 更新后自动切换活跃槽位，Root 不丢失</li>
-        <li>支持 KPM 和 SuSFS 高级功能</li>
+        <li>鑷姩妫€娴?<code>/dev/block/by-name/init_boot</code> 鍒嗗尯</li>
+        <li>鍒峰叆绗笁鏂瑰唴鏍稿悗浠嶅彲姝ｇ‘璇嗗埆 GKI 璁惧</li>
+        <li>OTA 鏇存柊鍚庤嚜鍔ㄥ垏鎹㈡椿璺冩Ы浣嶏紝Root 涓嶄涪澶?/li>
+        <li>鏀寔 KPM 鍜?SuSFS 楂樼骇鍔熻兘</li>
       </ul>
     </div>
     <div class="doc-card">
-      <h3>&#x1F9E9; 模块系统</h3>
-      <p>模块是 KinSU 冒险者的魔法道具。每个模块都能扩展系统功能，从系统美化到性能优化，无所不能。</p>
+      <h3>&#x1F9E9; 妯″潡绯荤粺</h3>
+      <p>妯″潡鏄?KinSU 鍐掗櫓鑰呯殑榄旀硶閬撳叿銆傛瘡涓ā鍧楅兘鑳芥墿灞曠郴缁熷姛鑳斤紝浠庣郴缁熺編鍖栧埌鎬ц兘浼樺寲锛屾棤鎵€涓嶈兘銆?/p>
       <ul>
-        <li>支持 WebUI 可视化配置界面</li>
-        <li>模块仓库一键安装，自动更新检测</li>
-        <li>安全沙箱隔离，模块互不干扰</li>
-        <li>支持模块卸载与禁用，随时切换</li>
+        <li>鏀寔 WebUI 鍙鍖栭厤缃晫闈?/li>
+        <li>妯″潡浠撳簱涓€閿畨瑁咃紝鑷姩鏇存柊妫€娴?/li>
+        <li>瀹夊叏娌欑闅旂锛屾ā鍧椾簰涓嶅共鎵?/li>
+        <li>鏀寔妯″潡鍗歌浇涓庣鐢紝闅忔椂鍒囨崲</li>
       </ul>
     </div>
     <div class="doc-card">
-      <h3>&#x1F6E1; 超级用户管理</h3>
-      <p>精细的权限控制系统，为每个应用独立配置 Root 权限。支持模板系统，一键应用常用权限配置。</p>
+      <h3>&#x1F6E1; 瓒呯骇鐢ㄦ埛绠＄悊</h3>
+      <p>绮剧粏鐨勬潈闄愭帶鍒剁郴缁燂紝涓烘瘡涓簲鐢ㄧ嫭绔嬮厤缃?Root 鏉冮檺銆傛敮鎸佹ā鏉跨郴缁燂紝涓€閿簲鐢ㄥ父鐢ㄦ潈闄愰厤缃€?/p>
       <ul>
-        <li>应用级 Root 权限开关</li>
-        <li>自定义 SELinux 上下文与能力集</li>
-        <li>模板系统：保存、分享、复用权限配置</li>
-        <li>操作日志记录，一切尽在掌握</li>
+        <li>搴旂敤绾?Root 鏉冮檺寮€鍏?/li>
+        <li>鑷畾涔?SELinux 涓婁笅鏂囦笌鑳藉姏闆?/li>
+        <li>妯℃澘绯荤粺锛氫繚瀛樸€佸垎浜€佸鐢ㄦ潈闄愰厤缃?/li>
+        <li>鎿嶄綔鏃ュ織璁板綍锛屼竴鍒囧敖鍦ㄦ帉鎻?/li>
       </ul>
     </div>
     <div class="doc-card">
-      <h3>&#x1F575; SuSFS 隐身术</h3>
-      <p>SuSFS（Suspend FS）是 KinSU 的隐身结界，可以隐藏内核补丁和用户空间模块的存在，让 Root 状态遁入无形。</p>
+      <h3>&#x1F575; SuSFS 闅愯韩鏈?/h3>
+      <p>SuSFS锛圫uspend FS锛夋槸 KinSU 鐨勯殣韬粨鐣岋紝鍙互闅愯棌鍐呮牳琛ヤ竵鍜岀敤鎴风┖闂存ā鍧楃殑瀛樺湪锛岃 Root 鐘舵€侀亖鍏ユ棤褰€?/p>
       <ul>
-        <li>隐藏内核模块加载状态</li>
-        <li>隐藏用户空间模块文件</li>
-        <li>对抗检测工具的扫描</li>
-        <li>仅 GKI 设备可用（需内核支持）</li>
+        <li>闅愯棌鍐呮牳妯″潡鍔犺浇鐘舵€?/li>
+        <li>闅愯棌鐢ㄦ埛绌洪棿妯″潡鏂囦欢</li>
+        <li>瀵规姉妫€娴嬪伐鍏风殑鎵弿</li>
+        <li>浠?GKI 璁惧鍙敤锛堥渶鍐呮牳鏀寔锛?/li>
       </ul>
     </div>
     <div class="doc-card">
-      <h3>&#x2699; KPM 内核补丁</h3>
-      <p>KPM（Kernel Patch Module）是 KinSU 的高级内核补丁系统，可以在运行时动态修补内核行为，实现更深层的能力扩展。</p>
+      <h3>&#x2699; KPM 鍐呮牳琛ヤ竵</h3>
+      <p>KPM锛圞ernel Patch Module锛夋槸 KinSU 鐨勯珮绾у唴鏍歌ˉ涓佺郴缁燂紝鍙互鍦ㄨ繍琛屾椂鍔ㄦ€佷慨琛ュ唴鏍歌涓猴紝瀹炵幇鏇存繁灞傜殑鑳藉姏鎵╁睍銆?/p>
       <ul>
-        <li>运行时内核补丁注入</li>
-        <li>支持自定义补丁模块</li>
-        <li>与 LKM 模式协同工作</li>
-        <li>仅 GKI 设备可用（需内核支持）</li>
+        <li>杩愯鏃跺唴鏍歌ˉ涓佹敞鍏?/li>
+        <li>鏀寔鑷畾涔夎ˉ涓佹ā鍧?/li>
+        <li>涓?LKM 妯″紡鍗忓悓宸ヤ綔</li>
+        <li>浠?GKI 璁惧鍙敤锛堥渶鍐呮牳鏀寔锛?/li>
       </ul>
     </div>
     <div class="doc-card">
-      <h3>&#x1F3A8; 主题幻化</h3>
-      <p>KinSU 内置强大的主题引擎，支持动态取色、多种配色风格和字体选择，让你的管理器独一无二。</p>
+      <h3>&#x1F3A8; 涓婚骞诲寲</h3>
+      <p>KinSU 鍐呯疆寮哄ぇ鐨勪富棰樺紩鎿庯紝鏀寔鍔ㄦ€佸彇鑹层€佸绉嶉厤鑹查鏍煎拰瀛椾綋閫夋嫨锛岃浣犵殑绠＄悊鍣ㄧ嫭涓€鏃犱簩銆?/p>
       <ul>
-        <li>15 种关键色 + 8 种调色板风格</li>
-        <li>2021/2025 双色彩规范</li>
-        <li>iPhone 风格字体幻化</li>
-        <li>实时预览，所见即所得</li>
+        <li>15 绉嶅叧閿壊 + 8 绉嶈皟鑹叉澘椋庢牸</li>
+        <li>2021/2025 鍙岃壊褰╄鑼?/li>
+        <li>iPhone 椋庢牸瀛椾綋骞诲寲</li>
+        <li>瀹炴椂棰勮锛屾墍瑙佸嵆鎵€寰?/li>
       </ul>
     </div>
     <div class="doc-card">
-      <h3>&#x1F512; 安全防御</h3>
-      <p>KinSU 经过全面的安全加固，修复了 21 个安全漏洞，包括命令注入、路径穿越、TOCTOU 竞争条件等。</p>
+      <h3>&#x1F512; 瀹夊叏闃插尽</h3>
+      <p>KinSU 缁忚繃鍏ㄩ潰鐨勫畨鍏ㄥ姞鍥猴紝淇浜?21 涓畨鍏ㄦ紡娲烇紝鍖呮嫭鍛戒护娉ㄥ叆銆佽矾寰勭┛瓒娿€乀OCTOU 绔炰簤鏉′欢绛夈€?/p>
       <ul>
-        <li>命令注入防护（参数化调用）</li>
-        <li>路径穿越防护（路径规范化）</li>
-        <li>WebUI URI 注入防护</li>
-        <li>模块安装脚本安全加固</li>
+        <li>鍛戒护娉ㄥ叆闃叉姢锛堝弬鏁板寲璋冪敤锛?/li>
+        <li>璺緞绌胯秺闃叉姢锛堣矾寰勮鑼冨寲锛?/li>
+        <li>WebUI URI 娉ㄥ叆闃叉姢</li>
+        <li>妯″潡瀹夎鑴氭湰瀹夊叏鍔犲浐</li>
       </ul>
     </div>
   </div>
 </div>
 
 <div class="section" id="guide">
-  <h2 class="section-title">新手冒险指南</h2>
-  <p class="section-desc">从零开始的 Root 冒险，只需简单几步即可踏上旅途</p>
+  <h2 class="section-title">鏂版墜鍐掗櫓鎸囧崡</h2>
+  <p class="section-desc">浠庨浂寮€濮嬬殑 Root 鍐掗櫓锛屽彧闇€绠€鍗曞嚑姝ュ嵆鍙笍涓婃梾閫?/p>
   <div class="step-list">
     <div class="step">
       <div class="step-num">1</div>
-      <h3>解锁 Bootloader</h3>
-      <p>首先需要解锁设备的 Bootloader，这是通往异世界的入口。不同厂商的解锁方式各异，请查阅设备对应教程。</p>
+      <h3>瑙ｉ攣 Bootloader</h3>
+      <p>棣栧厛闇€瑕佽В閿佽澶囩殑 Bootloader锛岃繖鏄€氬線寮備笘鐣岀殑鍏ュ彛銆備笉鍚屽巶鍟嗙殑瑙ｉ攣鏂瑰紡鍚勫紓锛岃鏌ラ槄璁惧瀵瑰簲鏁欑▼銆?/p>
     </div>
     <div class="step">
       <div class="step-num">2</div>
-      <h3>刷入 KinSU 内核</h3>
-      <p>下载对应设备的 KinSU 内核镜像，通过 <code>fastboot flash boot</code> 或 <code>fastboot flash init_boot</code> 刷入设备。</p>
+      <h3>鍒峰叆 KinSU 鍐呮牳</h3>
+      <p>涓嬭浇瀵瑰簲璁惧鐨?KinSU 鍐呮牳闀滃儚锛岄€氳繃 <code>fastboot flash boot</code> 鎴?<code>fastboot flash init_boot</code> 鍒峰叆璁惧銆?/p>
     </div>
     <div class="step">
       <div class="step-num">3</div>
-      <h3>安装 KinSU 管理器</h3>
-      <p>从 <a href="https://github.com/Spring-bulid/KinSU/releases/latest" style="color:var(--primary-light)">GitHub Releases</a> 下载最新版管理器 APK 并安装，这是你冒险的指挥中心。</p>
+      <h3>瀹夎 KinSU 绠＄悊鍣?/h3>
+      <p>浠?<a href="https://github.com/Spring-bulid/KinSU/releases/latest" style="color:var(--primary-light)">GitHub Releases</a> 涓嬭浇鏈€鏂扮増绠＄悊鍣?APK 骞跺畨瑁咃紝杩欐槸浣犲啋闄╃殑鎸囨尌涓績銆?/p>
     </div>
     <div class="step">
       <div class="step-num">4</div>
-      <h3>开启冒险</h3>
-      <p>打开管理器，确认状态显示「工作中」，即可开始安装模块、授权应用，享受 Root 的力量！</p>
+      <h3>寮€鍚啋闄?/h3>
+      <p>鎵撳紑绠＄悊鍣紝纭鐘舵€佹樉绀恒€屽伐浣滀腑銆嶏紝鍗冲彲寮€濮嬪畨瑁呮ā鍧椼€佹巿鏉冨簲鐢紝浜彈 Root 鐨勫姏閲忥紒</p>
     </div>
   </div>
 </div>
 
 <div class="section" id="compare">
-  <h2 class="section-title">冒险者公会对比</h2>
-  <p class="section-desc">KinSU 与其他 Root 方案的能力对比，一目了然</p>
+  <h2 class="section-title">鍐掗櫓鑰呭叕浼氬姣?/h2>
+  <p class="section-desc">KinSU 涓庡叾浠?Root 鏂规鐨勮兘鍔涘姣旓紝涓€鐩簡鐒?/p>
   <table class="compare-table">
     <thead>
-      <tr><th>能力</th><th>KinSU</th><th>KernelSU</th><th>Magisk</th></tr>
+      <tr><th>鑳藉姏</th><th>KinSU</th><th>KernelSU</th><th>Magisk</th></tr>
     </thead>
     <tbody>
-      <tr><td>内核级 Root</td><td class="yes">&#x2713;</td><td class="yes">&#x2713;</td><td class="no">&#x2717;</td></tr>
-      <tr><td>LKM 模式</td><td class="yes">&#x2713;</td><td class="no">&#x2717;</td><td class="no">&#x2717;</td></tr>
-      <tr><td>GKI 适配</td><td class="yes">&#x2713;</td><td class="yes">&#x2713;</td><td class="yes">&#x2713;</td></tr>
-      <tr><td>模块管理</td><td class="yes">&#x2713;</td><td class="yes">&#x2713;</td><td class="yes">&#x2713;</td></tr>
-      <tr><td>WebUI 支持</td><td class="yes">&#x2713;</td><td class="yes">&#x2713;</td><td class="no">&#x2717;</td></tr>
-      <tr><td>SuSFS 隐身</td><td class="yes">&#x2713;</td><td class="yes">&#x2713;</td><td class="no">&#x2717;</td></tr>
-      <tr><td>KPM 补丁</td><td class="yes">&#x2713;</td><td class="no">&#x2717;</td><td class="no">&#x2717;</td></tr>
-      <tr><td>动态主题</td><td class="yes">&#x2713;</td><td class="no">&#x2717;</td><td class="no">&#x2717;</td></tr>
-      <tr><td>iPhone 字体</td><td class="yes">&#x2713;</td><td class="no">&#x2717;</td><td class="no">&#x2717;</td></tr>
-      <tr><td>安全加固</td><td class="yes">21 项修复</td><td class="no">&#x2717;</td><td class="no">&#x2717;</td></tr>
-      <tr><td>OTA 槽位修复</td><td class="yes">&#x2713;</td><td class="no">&#x2717;</td><td class="yes">&#x2713;</td></tr>
+      <tr><td>鍐呮牳绾?Root</td><td class="yes">&#x2713;</td><td class="yes">&#x2713;</td><td class="no">&#x2717;</td></tr>
+      <tr><td>LKM 妯″紡</td><td class="yes">&#x2713;</td><td class="no">&#x2717;</td><td class="no">&#x2717;</td></tr>
+      <tr><td>GKI 閫傞厤</td><td class="yes">&#x2713;</td><td class="yes">&#x2713;</td><td class="yes">&#x2713;</td></tr>
+      <tr><td>妯″潡绠＄悊</td><td class="yes">&#x2713;</td><td class="yes">&#x2713;</td><td class="yes">&#x2713;</td></tr>
+      <tr><td>WebUI 鏀寔</td><td class="yes">&#x2713;</td><td class="yes">&#x2713;</td><td class="no">&#x2717;</td></tr>
+      <tr><td>SuSFS 闅愯韩</td><td class="yes">&#x2713;</td><td class="yes">&#x2713;</td><td class="no">&#x2717;</td></tr>
+      <tr><td>KPM 琛ヤ竵</td><td class="yes">&#x2713;</td><td class="no">&#x2717;</td><td class="no">&#x2717;</td></tr>
+      <tr><td>鍔ㄦ€佷富棰?/td><td class="yes">&#x2713;</td><td class="no">&#x2717;</td><td class="no">&#x2717;</td></tr>
+      <tr><td>iPhone 瀛椾綋</td><td class="yes">&#x2713;</td><td class="no">&#x2717;</td><td class="no">&#x2717;</td></tr>
+      <tr><td>瀹夊叏鍔犲浐</td><td class="yes">21 椤逛慨澶?/td><td class="no">&#x2717;</td><td class="no">&#x2717;</td></tr>
+      <tr><td>OTA 妲戒綅淇</td><td class="yes">&#x2713;</td><td class="no">&#x2717;</td><td class="yes">&#x2713;</td></tr>
     </tbody>
   </table>
 </div>
 
 <div class="section" id="contributors">
-  <h2 class="section-title">冒险者名录</h2>
-  <p class="section-desc">感谢 KernelSU 的所有贡献者，是你们的努力铸就了这段冒险的基石</p>
+  <h2 class="section-title">鍐掗櫓鑰呭悕褰?/h2>
+  <p class="section-desc">鎰熻阿 KernelSU 鐨勬墍鏈夎础鐚€咃紝鏄綘浠殑鍔姏閾稿氨浜嗚繖娈靛啋闄╃殑鍩虹煶</p>
   <div class="contributors">
     <a href="https://github.com/tiann" target="_blank"><img src="https://avatars.githubusercontent.com/u/4233744?v=4" alt="tiann" title="tiann"></a>
     <a href="https://github.com/Ylarod" target="_blank"><img src="https://avatars.githubusercontent.com/u/30978685?v=4" alt="Ylarod" title="Ylarod"></a>
@@ -376,30 +376,29 @@ footer .copy{color:rgba(155,140,184,0.5);font-size:0.85em}
 <footer>
   <div class="links">
     <a href="https://github.com/Spring-bulid/KinSU">GitHub</a>
-    <a href="https://github.com/Spring-bulid/KinSU-Modules">模块仓库</a>
-    <a href="https://github.com/Spring-bulid/KinSU/releases">下载</a>
+    <a href="https://github.com/Spring-bulid/KinSU-Modules">妯″潡浠撳簱</a>
+    <a href="https://github.com/Spring-bulid/KinSU/releases">涓嬭浇</a>
     <a href="https://github.com/tiann/KernelSU">KernelSU</a>
   </div>
   <p class="copy">KinSU is based on KernelSU by tiann. This project is open source under GPL-3.0.</p>
 </footer>
 
 <script>
-// Load anime background
+// Load anime background - use multiple APIs for reliability
+var bgApis = [
+  'https://acg.yaohud.cn/dm/acg.php',
+  'https://api.oick.cn/random/api.php',
+  'https://api.suyanw.cn/api/comic/api.php'
+];
+var bgIndex = 0;
 function loadBg(){
-  var img=new Image();
-  img.crossOrigin='anonymous';
-  img.src='https://acg.yaohud.cn/dm/adaptive.php?_t='+Date.now();
-  img.onload=function(){
-    var el=document.getElementById('bgAnime');
-    el.style.opacity='0';
-    setTimeout(function(){
-      el.style.backgroundImage='url('+img.src+')';
-      el.style.opacity='1';
-    },500);
-  };
+  var el = document.getElementById('bgAnime');
+  var url = bgApis[bgIndex] + '?_t=' + Date.now();
+  el.style.backgroundImage = 'url(' + url + ')';
+  bgIndex = (bgIndex + 1) % bgApis.length;
 }
 loadBg();
-setInterval(loadBg,30000);
+setInterval(loadBg, 20000);
 
 // Smooth scroll
 document.querySelectorAll('a[href^="#"]').forEach(function(a){
